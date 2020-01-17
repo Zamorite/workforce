@@ -1,0 +1,657 @@
+<!-- login wrapper start -->
+<div class="login_wrapper jb_cover mb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="jb_cover">
+          <div class="login_form_wrapper">
+            <img src="../../assets/images/logo.png" class="mb-5" alt="logo" />
+            <h2>Sign up</h2>
+
+            <div class="row">
+              <div
+                [formGroup]="gForm"
+                class="col-lg-12 col-md-12 col-sm-12 col-12"
+              >
+                <div class="job_filter_category_sidebar jb_cover">
+                  <div class="job_filter_sidebar_heading jb_cover">
+                    <h1>General Details</h1>
+                  </div>
+                  <div class="job_overview_header jb_cover">
+                    <div class="row">
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          name="fname"
+                          placeholder="First Name*"
+                          formControlName="fname"
+                          [(ngModel)]="general.fname"
+                        />
+                        <i class="fas fa-user"></i>
+
+                        <div *ngIf="formErrors.fname" class="text-danger">
+                          <small class="mr-1">{{ formErrors.fname }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          placeholder="Last Name*"
+                          formControlName="lname"
+                          [(ngModel)]="general.lname"
+                        />
+                        <i class="fas fa-tag"></i>
+
+                        <div *ngIf="formErrors.lname" class="text-danger">
+                          <small class="mr-1">{{ formErrors.lname }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="email"
+                          class="form-control require"
+                          name="email"
+                          placeholder="Email Address*"
+                          formControlName="email"
+                          [(ngModel)]="general.email"
+                        />
+                        <i class="fas fa-envelope"></i>
+
+                        <div *ngIf="formErrors.email" class="text-danger">
+                          <small class="mr-1">{{ formErrors.email }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="tel"
+                          class="form-control require"
+                          name="phone"
+                          placeholder="Phone*"
+                          formControlName="phone"
+                          [(ngModel)]="general.phone"
+                        />
+                        <i class="fas fa-phone"></i>
+
+                        <div *ngIf="formErrors.phone" class="text-danger">
+                          <small class="mr-1">{{ formErrors.phone }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="password"
+                          class="form-control require"
+                          placeholder="Password*"
+                          formControlName="password"
+                          [(ngModel)]="general.password"
+                        />
+                        <i class="fas fa-lock"></i>
+
+                        <div *ngIf="formErrors.password" class="text-danger">
+                          <small class="mr-1">{{ formErrors.password }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="password"
+                          class="form-control require"
+                          placeholder="Confirm Password*"
+                          formControlName="cPassword"
+                          [(ngModel)]="cPassword"
+                        />
+                        <i class="fas fa-lock"></i>
+
+                        <div
+                          *ngIf="
+                            formErrors.cPassword ||
+                            (general.password != cPassword &&
+                              !(
+                                ['', null].includes(general.password) ||
+                                ['', null].includes(cPassword)
+                              ))
+                          "
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{ formErrors.cPassword }}</small>
+                          <small
+                            class="mr-1"
+                            *ngIf="
+                              general.password != cPassword &&
+                              !(
+                                ['', null].includes(general.password) ||
+                                ['', null].includes(cPassword)
+                              )
+                            "
+                            >Passwords don't match!</small
+                          >
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form mx-auto d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          placeholder="Address*"
+                          formControlName="address"
+                          [(ngModel)]="general.address"
+                        />
+                        <i class="fas fa-map-marker"></i>
+
+                        <div *ngIf="formErrors.address" class="text-danger">
+                          <small class="mr-1">{{ formErrors.address }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-12 d-block my-3 mx-auto">
+                <div class="comments_form form-group float-none">
+                  <label for="roleSelect">Select Role</label>
+                  <!-- 
+              formControlName="sector" -->
+                  <select
+                    [(ngModel)]="role"
+                    class="form-control"
+                    id="roleSelect"
+                  >
+                    <option [value]="'employee'" selected
+                      >I am an Employee</option
+                    >
+                    <option [value]="'employer'">I am an Employer</option>
+                  </select>
+                </div>
+              </div>
+
+              <div
+                *ngIf="role == 'employer'"
+                id="employer"
+                class="col-lg-12 col-md-12 col-sm-12 col-12"
+              >
+                <div
+                  [formGroup]="rForm"
+                  class="job_filter_category_sidebar jb_cover"
+                >
+                  <div class="job_filter_sidebar_heading jb_cover">
+                    <h1>Employer Details</h1>
+                  </div>
+                  <div class="job_overview_header jb_cover">
+                    <div class="row">
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          name="full_name"
+                          placeholder="Job Title*"
+                          formControlName="jobTitle"
+                          [(ngModel)]="employer.jobTitle"
+                        />
+                        <i class="fas fa-briefcase"></i>
+
+                        <div *ngIf="formErrors.jobTitle" class="text-danger">
+                          <small class="mr-1">{{ formErrors.jobTitle }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          placeholder="Company*"
+                          formControlName="company"
+                          [(ngModel)]="employer.company"
+                        />
+                        <i class="fas fa-building"></i>
+
+                        <div *ngIf="formErrors.company" class="text-danger">
+                          <small class="mr-1">{{ formErrors.company }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                *ngIf="role == 'employee'"
+                id="employer"
+                class="col-lg-12 col-md-12 col-sm-12 col-12"
+              >
+                <div
+                  [formGroup]="eForm"
+                  class="job_filter_category_sidebar jb_cover"
+                >
+                  <div class="job_filter_sidebar_heading jb_cover">
+                    <h1>Employee Details</h1>
+                  </div>
+                  <div class="job_overview_header jb_cover">
+                    <div class="row">
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          name="profession"
+                          placeholder="Profession*"
+                          formControlName="profession"
+                          [(ngModel)]="employee.profession"
+                        />
+                        <i class="fas fa-briefcase"></i>
+
+                        <div *ngIf="formErrors.profession" class="text-danger">
+                          <small class="mr-1">{{
+                            formErrors.profession
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <!-- 
+                          formControlName="sector" -->
+                        <select
+                          title="Select Sector"
+                          [(ngModel)]="employee.sector"
+                          class="form-control"
+                          formControlName="sector"
+                        >
+                          <option *ngFor="let s of sectors" [value]="s">{{
+                            s
+                          }}</option>
+                          <option [value]="null" disabled selected
+                            >Select Sector</option
+                          >
+                        </select>
+
+                        <i class="fas fa-globe"></i>
+
+                        <div *ngIf="formErrors.sector" class="text-danger">
+                          <small class="mr-1">{{ formErrors.sector }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form mx-auto d-inline-block col-md-6"
+                      >
+                        <label for="utility_bill">Upload Utility Bill</label>
+                        <input
+                          type="file"
+                          #proofInput
+                          class="form-control require"
+                          name="utility_bill"
+                          placeholder="Utility Bill*"
+                          (blur)="setProof($event)"
+                        />
+                        <!-- (change)="setProof($event)" -->
+
+                        <div
+                          *ngIf="!['', null].includes(proofError)"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{ proofError }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                *ngIf="role == 'employee'"
+                class="col-lg-12 col-md-12 col-sm-12 col-12"
+              >
+                <div
+                  [formGroup]="eForm"
+                  class="job_filter_category_sidebar jb_cover"
+                >
+                  <div class="job_filter_sidebar_heading jb_cover">
+                    <h1>Referee 1 Details</h1>
+                  </div>
+                  <div class="job_overview_header jb_cover">
+                    <div class="row">
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          name="full_name"
+                          placeholder="Referee 1 Name*"
+                          formControlName="referee1Name"
+                          [(ngModel)]="employee.referee1Name"
+                        />
+                        <i class="fas fa-user"></i>
+
+                        <div
+                          *ngIf="formErrors.referee1Name"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{
+                            formErrors.referee1Name
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="tel"
+                          class="form-control require"
+                          placeholder="Referee 1 Phone*"
+                          formControlName="referee1Phone"
+                          [(ngModel)]="employee.referee1Phone"
+                        />
+                        <i class="fas fa-phone"></i>
+
+                        <div
+                          *ngIf="formErrors.referee1Phone"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{
+                            formErrors.referee1Phone
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="email"
+                          class="form-control require"
+                          name="email"
+                          placeholder="Referee 1 Email*"
+                          formControlName="referee1Email"
+                          [(ngModel)]="employee.referee1Email"
+                        />
+                        <i class="fas fa-envelope"></i>
+
+                        <div
+                          *ngIf="formErrors.referee1Email"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{
+                            formErrors.referee1Email
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          placeholder="Referee 1 Job*"
+                          formControlName="referee1Job"
+                          [(ngModel)]="employee.referee1Job"
+                        />
+                        <i class="fas fa-briefcase"></i>
+
+                        <div *ngIf="formErrors.referee1Job" class="text-danger">
+                          <small class="mr-1">{{
+                            formErrors.referee1Job
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          name="Relationship"
+                          placeholder="Referee 1 Relationship*"
+                          formControlName="referee1Rel"
+                          [(ngModel)]="employee.referee1Rel"
+                        />
+                        <i class="fas fa-link"></i>
+
+                        <div *ngIf="formErrors.referee1Rel" class="text-danger">
+                          <small class="mr-1">{{
+                            formErrors.referee1Rel
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="address"
+                          class="form-control require"
+                          placeholder="Referee 1 Address*"
+                          formControlName="referee1Address"
+                          [(ngModel)]="employee.referee1Address"
+                        />
+                        <i class="fas fa-map-marker"></i>
+
+                        <div
+                          *ngIf="formErrors.referee1Address"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{
+                            formErrors.referee1Address
+                          }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                *ngIf="role == 'employee'"
+                class="col-lg-12 col-md-12 col-sm-12 col-12"
+              >
+                <div
+                  [formGroup]="eForm"
+                  class="job_filter_category_sidebar jb_cover"
+                >
+                  <div class="job_filter_sidebar_heading jb_cover">
+                    <h1>Referee 2 Details</h1>
+                  </div>
+                  <div class="job_overview_header jb_cover">
+                    <div class="row">
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          name="full_name"
+                          placeholder="Referee 2 Name*"
+                          formControlName="referee2Name"
+                          [(ngModel)]="employee.referee2Name"
+                        />
+                        <i class="fas fa-user"></i>
+
+                        <div
+                          *ngIf="formErrors.referee2Name"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{
+                            formErrors.referee2Name
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="tel"
+                          class="form-control require"
+                          placeholder="Referee 2 Phone*"
+                          formControlName="referee2Phone"
+                          [(ngModel)]="employee.referee2Phone"
+                        />
+                        <i class="fas fa-phone"></i>
+
+                        <div
+                          *ngIf="formErrors.referee2Phone"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{
+                            formErrors.referee2Phone
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="email"
+                          class="form-control require"
+                          name="email"
+                          placeholder="Referee 2 Email*"
+                          formControlName="referee2Email"
+                          [(ngModel)]="employee.referee2Email"
+                        />
+                        <i class="fas fa-envelope"></i>
+
+                        <div
+                          *ngIf="formErrors.referee2Email"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{
+                            formErrors.referee2Email
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          placeholder="Referee 2 Job*"
+                          formControlName="referee2Job"
+                          [(ngModel)]="employee.referee2Job"
+                        />
+                        <i class="fas fa-briefcase"></i>
+
+                        <div *ngIf="formErrors.referee2Job" class="text-danger">
+                          <small class="mr-1">{{
+                            formErrors.referee2Job
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          name="Relationship"
+                          placeholder="Referee 2 Relationship*"
+                          formControlName="referee2Rel"
+                          [(ngModel)]="employee.referee2Rel"
+                        />
+                        <i class="fas fa-link"></i>
+
+                        <div *ngIf="formErrors.referee2Rel" class="text-danger">
+                          <small class="mr-1">{{
+                            formErrors.referee2Rel
+                          }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <input
+                          type="text"
+                          class="form-control require"
+                          placeholder="Referee 2 Address*"
+                          formControlName="referee2Address"
+                          [(ngModel)]="employee.referee2Address"
+                        />
+                        <i class="fas fa-map-marker"></i>
+
+                        <div
+                          *ngIf="formErrors.referee2Address"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{
+                            formErrors.referee2Address
+                          }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- form-group icon_form  -->
+
+            <div class="text-danger">
+              <small *ngIf="gForm.invalid || (role == 'employer' && rForm.invalid) || (role == 'employee' && eForm.invalid)" class="mr-1"
+                >Please check and fill all fields as appropriate</small
+              >
+              <small *ngIf="role == 'employee' && proof == null" class="mr-1"
+                >You have to select an utility bill e.g PHCN bill, Water Bill, etc.</small
+              >
+            </div>
+
+            <div class="header_btn search_btn login_btn jb_cover">
+              <!-- <a class="mx-auto col-md-4">Sign Up</a> -->
+              <button
+                (click)="signUp()"
+                class="mx-auto col-md-4"
+                [disabled]="
+                  gForm.invalid ||
+                  (role == 'employee' && (eForm.invalid || proof == null)) ||
+                  (role == 'employer' && rForm.invalid)
+                "
+                type="submit"
+              >
+                Sign Up
+              </button>
+            </div>
+            <div class="dont_have_account jb_cover mb-5">
+              <p>
+                Already have an acount ?
+                <a [routerLink]="['/', 'auth']">Sign in</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- login wrapper end -->

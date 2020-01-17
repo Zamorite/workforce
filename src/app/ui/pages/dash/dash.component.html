@@ -1,0 +1,119 @@
+<!-- top header wrapper start -->
+
+<!-- top header wrapper end -->
+<!--employee dashboard wrapper start-->
+<div
+  *ngIf="auth.user$ | async as user"
+  class="candidate_dashboard_wrapper jb_cover mb-5"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="emp_dashboard_sidebar jb_cover">
+          <img
+            src="https://www.gravatar.com/avatar/{{user.email}}?d=retro&s=300"
+            class="img-responsive"
+            alt="post_img"
+          />
+          <div class="emp_web_profile candidate_web_profile jb_cover">
+            <h4>{{ user.fname }} {{ user.lname }}</h4>
+            <p>
+              {{
+                auth.isAdmin(user)
+                  ? "Admin"
+                  : auth.isEmployee(user)
+                  ? user.profession
+                  : user.jobTitle
+              }}
+            </p>
+            <!-- <div class="skills jb_cover">
+              <div class="skill-item jb_cover">
+                <h6>profile<span>70%</span></h6>
+                <div class="skills-progress">
+                  <span data-value="70%"></span>
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <div class="emp_follow_link jb_cover">
+            <ul class="feedlist">
+              <li>
+                <a
+                  [routerLink]="['/', 'dashboard']"
+                  routerLinkActive="link_active"
+                  ><i class="fas fa-tachometer-alt"></i> dashboard
+                </a>
+              </li>
+              <!-- <li>
+                <a
+                  [routerLink]="['/', 'dashboard', 'edit']"
+                  routerLinkActive="link_active"
+                >
+                  <i class="fas fa-edit"></i>edit profile
+                </a>
+              </li> -->
+              <li *ngIf="auth.isEmployee(user)">
+                <a
+                  [routerLink]="['/', 'dashboard', 'invites']"
+                  routerLinkActive="link_active"
+                  ><i class="fas fa-hand-holding"></i>invites
+                </a>
+              </li>
+              <li *ngIf="auth.isEmployee(user)">
+                <a
+                  [routerLink]="['/', 'dashboard', 'applied']"
+                  routerLinkActive="link_active"
+                  ><i class="fas fa-check-square"></i>applied jobs</a
+                >
+              </li>
+              <!-- <li>
+                <a [routerLink]="['/', 'dashboard', '']" routerLinkActive="link_active" 
+                  ><i class="fas fa-envelope"></i>request</a
+                >
+              </li> -->
+              <li *ngIf="!auth.isEmployee(user)">
+                <a
+                  [routerLink]="['/', 'dashboard', 'requests']"
+                  routerLinkActive="link_active"
+                  ><i class="fas fa-hand-holding"></i>requests</a
+                >
+              </li>
+              <li *ngIf="auth.isEmployer(user)">
+                <a
+                  [routerLink]="['/', 'dashboard', 'new_request']"
+                  routerLinkActive="link_active"
+                  ><i class="fas fa-plus-square"></i>new request</a
+                >
+              </li>
+
+              <li *ngIf="auth.isAdmin(user)">
+                <a
+                  [routerLink]="['/', 'dashboard', 'employers']"
+                  routerLinkActive="link_active"
+                  ><i class="fas fa-building"></i>employers</a
+                >
+              </li>
+              <li *ngIf="auth.isAdmin(user)">
+                <a
+                  [routerLink]="['/', 'dashboard', 'employees']"
+                  routerLinkActive="link_active"
+                  ><i class="fas fa-briefcase"></i>employees</a
+                >
+              </li>
+            </ul>
+            <ul class="feedlist logout_link jb_cover">
+              <li>
+                <a (click)="auth.signOut()" class="cp"
+                  ><i class="fas fa-power-off"></i> log out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-12 col-sm-12 col-12">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+.search_btn button:disabled {
+  background: gray !important;
+}
+
+.search_btn button:disabled::before {
+  border: 1px solid gray !important;
+}
+
+.search_btn button:disabled:hover {
+  color: white !important;
+}
+
+.cp {
+  cursor: pointer;
+}

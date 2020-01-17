@@ -1,0 +1,152 @@
+<div class="col-12">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="job_filter_category_sidebar pd0 jb_cover">
+        <div class="job_filter_sidebar_heading jb_cover">
+          <h1>post new job</h1>
+        </div>
+        <div [formGroup]="requestForm" class="job_overview_header jb_cover">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="contect_form3">
+                <label>job title</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Need Graphic Designer"
+                  formControlName="title"
+                  [(ngModel)]="job.title"
+                />
+
+                <div *ngIf="formErrors.title" class="text-danger">
+                  <small class="mr-1">{{ formErrors.title }}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="contect_form3">
+                <label>job description</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Need Graphic Designer"
+                  formControlName="description"
+                  [(ngModel)]="job.description"
+                />
+
+                <div *ngIf="formErrors.description" class="text-danger">
+                  <small class="mr-1">{{ formErrors.description }}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="contect_form3">
+                <label>number of workers</label>
+
+                <input
+                  type="number"
+                  min="1"
+                  name="name"
+                  placeholder="How many workers are needed?"
+                  formControlName="no"
+                  [(ngModel)]="job.no"
+                />
+
+                <div *ngIf="formErrors.no" class="text-danger">
+                  <small class="mr-1">{{ formErrors.no }}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="contect_form3 form-group">
+                <label>job sector</label>
+                <select class="form-control" formControlName="sector" [(ngModel)]="job.sector">
+                  
+                  <option *ngFor="let s of sectors" [value]="s">{{ s }}</option>
+                  <option [value]="null" disabled selected
+                    >Select Sector</option
+                  >
+                </select>
+
+                <div *ngIf="formErrors.sector" class="text-danger">
+                  <small class="mr-1">{{ formErrors.sector }}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="contect_form3">
+                <label>work location</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Need Graphic Designer"
+                  formControlName="location"
+                  [(ngModel)]="job.location"
+                />
+
+                <div *ngIf="formErrors.location" class="text-danger">
+                  <small class="mr-1">{{ formErrors.location }}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="contect_form3">
+                <label>work duration</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="For how long would workers work?"
+                  formControlName="duration"
+                  [(ngModel)]="job.duration"
+                />
+
+                <div *ngIf="formErrors.duration" class="text-danger">
+                  <small class="mr-1">{{ formErrors.duration }}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="contect_form3">
+                <label>deadline</label>
+                <input
+                  type="date"
+                  name="name"
+                  placeholder="40/h Week"
+                  formControlName="expiryDate"
+                  [(ngModel)]="job.expiryDate"
+                />
+
+                <div *ngIf="formErrors.expiryDate" class="text-danger">
+                  <small class="mr-1">{{ formErrors.expiryDate }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-danger text-center">
+            <small *ngIf="requestForm.invalid" class="d-block"
+              >Please check and fill all fields as appropriate</small
+            >
+            <small *ngIf="requestForm.invalid && job.sector == null" class="d-block"
+              >You have to select a job sector!</small
+            >
+          </div>
+          
+          <div class="header_btn search_btn login_btn jb_cover">
+            <!-- <a class="mx-auto col-md-4">Sign Up</a> -->
+            <button
+              (click)="request()"
+              class="mx-auto col-md-4"
+              [disabled]="
+                requestForm.invalid || ['', null].includes(job.sector)
+              "
+              type="submit"
+            >
+              Post Job
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

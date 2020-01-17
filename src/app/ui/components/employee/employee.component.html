@@ -1,0 +1,288 @@
+<div *ngIf="employee | async as e" class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+    <div class="job_listing_left_fullwidth jb_cover">
+      <div class="row">
+        <div class="col-12">
+          <div class="jp_job_post_side_img">
+            <img src="../../assets/images/ws.png" alt="post_img" />
+          </div>
+          <div class="jp_job_post_right_cont">
+            <h4>{{ e.fname }} {{ e.lname }}</h4>
+
+            <ul>
+              <li><i class="fas fa-briefcase"></i>&nbsp; {{ e.profession }}</li>
+              <li><i class="fas fa-globe"></i>&nbsp; {{ e.sector }}</li>
+              <li>
+                <i class="flaticon-location-pointer"></i>&nbsp; {{ e.address }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+    <div class="emp_job_post jb_cover">
+      <div class="emp_job_side_img greens">
+        <i class="fas fa-book"></i>
+      </div>
+      <div class="emp_job_side_text">
+        <h1>{{ (e.invitations || 0) > 0 ? e.invitations || 0 : "No" }}</h1>
+        <p>invite{{ (e.invitations || 0) > 1 ? "s" : "" }} sent</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+    <div class="emp_job_post jb_cover">
+      <div class="emp_job_side_img parts">
+        <i class="fas fa-envelope-open-text"></i>
+      </div>
+      <div class="emp_job_side_text">
+        <h1>{{ (e.applications || 0) > 0 ? e.applications || 0 : "No" }}</h1>
+        <p>job{{ (e.applications || 0) > 1 ? "s" : "" }} applied</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="job_filter_category_sidebar jb_cover">
+      <div class="job_filter_sidebar_heading jb_cover">
+        <h1>basic information</h1>
+      </div>
+      <div class="job_overview_header jb_cover">
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>profession:</li>
+              <li>{{ e?.profession }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper dcv jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-globe"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>sector:</li>
+              <li>{{ e?.sector }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>address:</li>
+              <li>{{ e?.address }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fa fa-phone"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>phone:</li>
+              <li>
+                <a href="tel:+{{ e?.phone }}">{{ e?.phone }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>email:</li>
+              <li>
+                <a href="mailto:{{ e?.email }}">{{ e?.email }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-file"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>utility proof:</li>
+              <li>
+                <a href="{{ e?.proofURL }}" download>Download Utility Proof</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-12">
+    <div class="job_filter_category_sidebar jb_cover">
+      <div class="job_filter_sidebar_heading jb_cover">
+        <h1>referee 1</h1>
+      </div>
+      <div class="job_overview_header jb_cover">
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>name:</li>
+              <li>{{ e?.referee1Name }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper dcv jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>job:</li>
+              <li>{{ e?.referee1Job }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper dcv jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-link"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>relationship:</li>
+              <li>{{ e?.referee1Rel }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>address:</li>
+              <li>{{ e?.referee1Address }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fa fa-phone"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>phone:</li>
+              <li>
+                <a href="tel:+{{ e?.phone }}">{{ e?.referee1Phone }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>email:</li>
+              <li>
+                <a href="mailto:{{ e?.email }}">{{ e?.referee1Email }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-12">
+    <div class="job_filter_category_sidebar jb_cover">
+      <div class="job_filter_sidebar_heading jb_cover">
+        <h1>referee 2</h1>
+      </div>
+      <div class="job_overview_header jb_cover">
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>name:</li>
+              <li>{{ e?.referee2Name }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper dcv jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>job:</li>
+              <li>{{ e?.referee2Job }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper dcv jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-link"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>relationship:</li>
+              <li>{{ e?.referee2Rel }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>address:</li>
+              <li>{{ e?.referee2Address }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fa fa-phone"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>phone:</li>
+              <li>
+                <a href="tel:+{{ e?.phone }}">{{ e?.referee2Phone }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="jp_listing_overview_list_main_wrapper jb_cover">
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>email:</li>
+              <li>
+                <a href="mailto:{{ e?.email }}">{{ e?.referee2Email }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

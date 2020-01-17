@@ -1,0 +1,13 @@
+<div *ngIf="auth.user$ | async as user">
+  <ng-container *ngIf="auth.isAdmin(user); else notAdmin">
+    <app-a-dash></app-a-dash>
+  </ng-container>
+  <ng-template #notAdmin>
+    <ng-container *ngIf="auth.isEmployer(user); else employee">
+      <app-r-dash></app-r-dash>
+    </ng-container>
+    <ng-template #employee>
+      <app-e-dash></app-e-dash>
+    </ng-template>
+  </ng-template>
+</div>

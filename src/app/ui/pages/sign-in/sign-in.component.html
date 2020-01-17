@@ -1,0 +1,72 @@
+<!-- login wrapper start -->
+<div class="login_wrapper jb_cover mb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto col-sm-12">
+        <div class="login_top_box jb_cover">
+          <div 
+          [formGroup]="userForm" class="login_form_wrapper p-3 p-md-5">
+            <img src="../../assets/images/logo.png" class="mb-5" alt="logo" />
+            <h2>Sign In</h2>
+            <div class="form-group icon_form comments_form mx-auto">
+              <input
+                type="text"
+                class="form-control require"
+                name="full_name"
+                placeholder="Email Address*"
+                formControlName="email"
+              />
+              <!-- [(ngModel)]="user.email" -->
+              <i class="fas fa-envelope"></i>
+
+              <div *ngIf="formErrors.email" class="text-danger">
+                <small class="mr-1">{{ formErrors.email }}</small>
+              </div>
+            </div>
+            <div class="form-group icon_form comments_form mx-auto">
+              <input
+                type="password"
+                class="form-control require"
+                placeholder="Password *"
+                formControlName="password"
+              />
+              <i class="fas fa-lock"></i>
+
+              <div *ngIf="formErrors.password" class="text-danger">
+                <small class="mr-1">{{ formErrors.password }}</small>
+              </div>
+            </div>
+            <div class="login_remember_box">
+              <!-- <label class="control control--checkbox"
+                >Remember me
+                <input type="checkbox" />
+                <span class="control__indicator"></span>
+              </label> -->
+              <!-- <a href="#" class="forget_password">
+                Forgot Password
+              </a> -->
+              <!-- Todo: Implement the Forgot Password Feature! -->
+            </div>
+            <div class="header_btn search_btn login_btn jb_cover">
+              <!-- <a href="#">Sign In</a> -->
+              <button
+                (click)="signIn()"
+                [disabled]="userForm.invalid"
+                type="submit"
+              >
+                Sign In
+              </button>
+            </div>
+            <div class="dont_have_account jb_cover mb-5">
+              <p>
+                Don’t have an acount ?
+                <a [routerLink]="['/', 'auth', 'sign_up']">Sign up</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- login wrapper end -->

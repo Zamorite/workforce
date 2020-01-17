@@ -1,0 +1,200 @@
+<!-- cp navi wrapper Start -->
+<nav
+  class="cd-dropdown cd_dropdown_index2 cd_dropdown_index3 d-block d-sm-block d-md-block d-lg-none d-xl-none"
+>
+  <h2>
+    <a [routerLink]="['/']">
+      <span
+        ><img src="../../assets/../../assets/images/logo5.png" alt="img"/></span
+    ></a>
+  </h2>
+  <a href="#0" class="cd-close">Close</a>
+  <ul class="cd-dropdown-content mt-5 pt-5">
+    <li *ngIf="!(auth.user$ | async)" class="gc_main_navigation">
+      <a
+        [routerLink]="['/', 'post_job']"
+        routerLinkActive="active"
+        class="nav-close gc_main_navigation"
+        >Post a Job</a
+      >
+    </li>
+    <span *ngIf="auth.user$ | async as user">
+      <li *ngIf="auth.isEmployer(user)" class="gc_main_navigation">
+        <a
+          [routerLink]="['/', 'dashboard', 'new_request']"
+          routerLinkActive="active"
+          class="nav-close gc_main_navigation"
+          >Post a Job</a
+        >
+      </li>
+    </span>
+
+    <li *ngIf="auth.user$ | async" class="gc_main_navigation">
+      <a
+        [routerLink]="['/', 'dashboard']"
+        routerLinkActive="active"
+        class="nav-close gc_main_navigation"
+        >Dashboard</a
+      >
+    </li>
+    <li class="gc_main_navigation">
+      <a
+        *ngIf="!(auth.user$ | async)"
+        [routerLink]="['/', 'auth']"
+        routerLinkActive="active"
+        class="nav-close gc_main_navigation"
+        >Sign In</a
+      >
+      <a
+        *ngIf="auth.user$ | async"
+        (click)="auth.signOut()"
+        class="nav-close gc_main_navigation cp"
+        >Sign Out</a
+      >
+    </li>
+  </ul>
+  <!-- .cd-dropdown-content -->
+</nav>
+
+<div class="cp_navi_main_wrapper jb_cover">
+  <div class="container-fluid">
+    <div class="cp_logo_wrapper">
+      <a [routerLink]="['/']">
+        <img src="../../assets/images/logo.png" alt="logo" />
+      </a>
+    </div>
+    <!-- mobile menu area start -->
+    <header
+      class="mobail_menu d-block d-sm-block d-md-block d-lg-none d-xl-none"
+    >
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="cd-dropdown-wrapper">
+              <a class="house_toggle" href="#0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  version="1.1"
+                  id="Capa_1"
+                  x="0px"
+                  y="0px"
+                  viewBox="0 0 31.177 31.177"
+                  style="enable-background:new 0 0 31.177 31.177;"
+                  xml:space="preserve"
+                  width="25px"
+                  height="25px"
+                >
+                  <g>
+                    <g>
+                      <path
+                        class="menubar"
+                        d="M30.23,1.775H0.946c-0.489,0-0.887-0.398-0.887-0.888S0.457,0,0.946,0H30.23    c0.49,0,0.888,0.398,0.888,0.888S30.72,1.775,30.23,1.775z"
+                        fill="#004165"
+                      ></path>
+                    </g>
+                    <g>
+                      <path
+                        class="menubar"
+                        d="M30.23,9.126H12.069c-0.49,0-0.888-0.398-0.888-0.888c0-0.49,0.398-0.888,0.888-0.888H30.23    c0.49,0,0.888,0.397,0.888,0.888C31.118,8.729,30.72,9.126,30.23,9.126z"
+                        fill="#004165"
+                      ></path>
+                    </g>
+                    <g>
+                      <path
+                        class="menubar"
+                        d="M30.23,16.477H0.946c-0.489,0-0.887-0.398-0.887-0.888c0-0.49,0.398-0.888,0.887-0.888H30.23    c0.49,0,0.888,0.397,0.888,0.888C31.118,16.079,30.72,16.477,30.23,16.477z"
+                        fill="#004165"
+                      ></path>
+                    </g>
+                    <g>
+                      <path
+                        class="menubar"
+                        d="M30.23,23.826H12.069c-0.49,0-0.888-0.396-0.888-0.887c0-0.49,0.398-0.888,0.888-0.888H30.23    c0.49,0,0.888,0.397,0.888,0.888C31.118,23.43,30.72,23.826,30.23,23.826z"
+                        fill="#004165"
+                      ></path>
+                    </g>
+                    <g>
+                      <path
+                        class="menubar"
+                        d="M30.23,31.177H0.946c-0.489,0-0.887-0.396-0.887-0.887c0-0.49,0.398-0.888,0.887-0.888H30.23    c0.49,0,0.888,0.398,0.888,0.888C31.118,30.78,30.72,31.177,30.23,31.177z"
+                        fill="#004165"
+                      ></path>
+                    </g>
+                  </g>
+                </svg>
+              </a>
+              <!-- .cd-dropdown -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- .cd-dropdown-wrapper -->
+    </header>
+    <div
+      *ngIf="auth.user$ | async as user"
+      class="d-none d-lg-block menu_btn_box jb_cover"
+    >
+      <div class="jb_profile_box">
+        <div tabindex="0">
+          <span class="current">
+            <img src="https://www.gravatar.com/avatar/{{user.email}}?d=retro" alt="img" />
+            <div class="luca_profile_wrapper d-inline">
+              <h1>
+                <a [routerLink]="['/', 'dashboard']"
+                  >{{ user.fname }} {{ user.lname }}</a
+                >
+              </h1>
+              <p>
+                <a [routerLink]="['/', 'dashboard']">{{ user.email }}</a>
+              </p>
+            </div></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="jb_navigation_wrapper float-right">
+      <div
+        class="mainmenu d-xl-block d-lg-block d-md-none d-sm-none d-none float-right"
+      >
+        <ul class="main_nav_ul">
+          <li *ngIf="!(auth.user$ | async)" class="gc_main_navigation">
+            <a [routerLink]="['/', 'post_job']" class="gc_main_navigation"
+              >Post a Job</a
+            >
+          </li>
+          <span *ngIf="auth.user$ | async as user">
+            <li *ngIf="auth.isEmployer(user)" class="gc_main_navigation">
+              <a [routerLink]="['/', 'dashboard', 'new_request']" class="gc_main_navigation"
+                >Post a Job</a
+              >
+            </li>
+          </span>
+
+          <li *ngIf="auth.user$ | async" class="gc_main_navigation">
+            <a [routerLink]="['/', 'dashboard']" class="gc_main_navigation"
+              >Dashboard</a
+            >
+          </li>
+          <li class="gc_main_navigation">
+            <a
+              *ngIf="!(auth.user$ | async)"
+              [routerLink]="['/', 'auth']"
+              class="gc_main_navigation"
+              >Sign In</a
+            >
+            <a
+              *ngIf="auth.user$ | async"
+              (click)="auth.signOut()"
+              class="gc_main_navigation cp"
+              >Sign Out</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- navi wrapper End -->

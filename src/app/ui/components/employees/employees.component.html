@@ -1,0 +1,54 @@
+<div class="col-12">
+  <div class="job_main_overflow jb_cover">
+    <div class="latest_job_overlow jb_cover">
+      <div class="manage_jobs_wrapper jb_cover">
+        <div class="job_list mange_list applications_recent">
+          <h6>
+            All Employees
+          </h6>
+        </div>
+      </div>
+
+      <div
+        *ngFor="let c of employees | async"
+        [routerLink]="['/', 'dashboard', 'employee', c.email]"
+        class="latest_job_box jb_cover cp"
+      >
+        <div class="job_list recent_app_1">
+          <div class="recent_img">
+            <img src="https://www.gravatar.com/avatar/{{c.email}}?d=retro" alt="post_img" />
+          </div>
+          <div class="recent_cntnt">
+            <h6>
+              <a>{{ c.fname }} {{ c.lname }}</a>
+            </h6>
+            <ul>
+              <li><i class="fas fa-briefcase"></i>&nbsp; {{ c.profession }}</li>
+              <li>
+                <i class="fa fa-globe"></i>&nbsp;
+                {{ c.sector }}
+              </li>
+              <li>
+                <i class="flaticon-location-pointer"></i>&nbsp;
+                {{ c.address }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job_list_next recent_app_1">
+          <div class="header_btn search_btn jb_cover">
+            <a href="mailto:{{ c.email }}" class="float-right mr-4 mb-3">
+              Call
+              <i class="ml-1 fas fa-phone"></i>
+            </a>
+            <a href="tel:{{ c.phone }}" class="float-right mr-4 mb-3">
+              Send Mail
+              <i class="ml-1 fas fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
