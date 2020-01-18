@@ -117,7 +117,7 @@
                         </div>
                         <div class="jp_listing_list_icon_cont_wrapper">
                           <ul>
-                            <li>title:</li>
+                            <li>job title:</li>
                             <li>{{ r.title }}</li>
                           </ul>
                         </div>
@@ -139,7 +139,7 @@
                         </div>
                         <div class="jp_listing_list_icon_cont_wrapper">
                           <ul>
-                            <li>location:</li>
+                            <li>work/site location:</li>
                             <li>{{ r.location }}</li>
                           </ul>
                         </div>
@@ -187,7 +187,7 @@
                         </div>
                         <div class="jp_listing_list_icon_cont_wrapper">
                           <ul>
-                            <li>description</li>
+                            <li>job description</li>
                             <li>{{ r.description }}</li>
                           </ul>
                         </div>
@@ -200,6 +200,73 @@
                           <ul>
                             <li>Expiry Date</li>
                             <li>{{ r.expiryDate }}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="auth.isAdmin(user) && r.ownerName" class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="job_filter_category_sidebar  jb_cover">
+                <div class="job_filter_sidebar_heading jb_cover">
+                  <h1>
+                    employer contact details
+                    <span
+                      ><a href="#" data-toggle="modal" data-target="#myModal1"
+                        ><i class="fas fa-edit"></i></a
+                    ></span>
+                  </h1>
+                </div>
+                <div class="job_overview_header jb_cover">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                      <div class="jp_listing_overview_list_main_wrapper jb_cover">
+                        <div class="jp_listing_list_icon">
+                          <i class="flaticon-man-user"></i>
+                        </div>
+                        <div class="jp_listing_list_icon_cont_wrapper">
+                          <ul>
+                            <li>Name:</li>
+                            <li>{{ r.ownerName }}</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="jp_listing_overview_list_main_wrapper jb_cover">
+                        <div class="jp_listing_list_icon">
+                          <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="jp_listing_list_icon_cont_wrapper">
+                          <ul>
+                            <li>Email:</li>
+                            <li><a href="mailto:{{ r.owner }}">{{ r.owner }}</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                      <div class="jp_listing_overview_list_main_wrapper jb_cover">
+                        <div class="jp_listing_list_icon">
+                          <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="jp_listing_list_icon_cont_wrapper">
+                          <ul>
+                            <li>Phone:</li>
+                            <li><a href="tel:+{{ r.ownerPhone }}">{{ r.ownerPhone }}</a></li>
+                            <!-- <li><a href="mailto:{{ r.owner }}">{{ r.owner }}</a></li> -->
+                            <!-- <li>{{ r.owner }}<a href="mailto:{{ r.owner }}"><i class="fa fa-link"></i></a></li> -->
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="jp_listing_overview_list_main_wrapper jb_cover">
+                        <div class="jp_listing_list_icon">
+                          <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="jp_listing_list_icon_cont_wrapper">
+                          <ul>
+                            <li>Address:</li>
+                            <li>{{ r.ownerAddress }}</li>
                           </ul>
                         </div>
                       </div>

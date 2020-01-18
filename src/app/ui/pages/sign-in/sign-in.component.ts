@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilService } from 'src/app/core/services/util.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { NotifService } from 'src/app/core/services/notif.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,12 +12,14 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class SignInComponent implements OnInit {
   userForm: FormGroup;
+  email: string = '';
 
   constructor(
     private router: Router,
     public util: UtilService,
+    public notif: NotifService,
     private fb: FormBuilder,
-    private auth: AuthService
+    public auth: AuthService
   ) {}
 
   ngOnInit() {
@@ -82,6 +85,20 @@ export class SignInComponent implements OnInit {
 
   signIn(): void {
     this.auth.emailLogin(this.userForm.value);
+  }
+
+  forgotPwd() {
+    console.log(this.email);
+    
+    if (this.email == '') {
+      this.notif.warn('Enter a valid email address first.');
+    } else {
+      if (this.userForm.get('email').valid) {
+        this.auth.resetPassword(this.userForm.get('email').value);
+      } else {
+        this.notif.warn('Your email address doesn\'t look quite right.');
+      }
+    }
   }
 
 }

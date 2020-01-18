@@ -3526,7 +3526,6 @@ select label {
 }
 .chat-box-body:after {
   content: "";
-  background-image: url(../images/chat.png);
   height: 100%;
   background-position: center 0;
   background-size: cover;

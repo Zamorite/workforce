@@ -25,6 +25,10 @@ export class NotifService {
   success(message: string) {
     Notiflix.Notify.Success(`Great! <br/>${message}`);
   }
+  
+  warn(message: string) {
+    Notiflix.Notify.Warning(`Oops! <br/>${message}`);
+  }
 
   noAuth(action?: string) {
     Notiflix.Notify.Warning(

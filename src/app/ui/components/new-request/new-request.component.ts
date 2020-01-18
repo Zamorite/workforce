@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Job } from 'src/app/core/models/job.model';
-import { UtilService } from 'src/app/core/services/util.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { DataService } from 'src/app/core/services/data.service';
-import { Router } from '@angular/router';
-import { NotifService } from 'src/app/core/services/notif.service';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Job } from "src/app/core/models/job.model";
+import { UtilService } from "src/app/core/services/util.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { DataService } from "src/app/core/services/data.service";
+import { Router } from "@angular/router";
+import { NotifService } from "src/app/core/services/notif.service";
 
 @Component({
-  selector: 'app-new-request',
-  templateUrl: './new-request.component.html',
-  styleUrls: ['./new-request.component.scss']
+  selector: "app-new-request",
+  templateUrl: "./new-request.component.html",
+  styleUrls: ["./new-request.component.scss"]
 })
 export class NewRequestComponent implements OnInit {
   requestForm: FormGroup;
 
   job: Job = {
     title: null,
+    ownerName: null,
+    ownerPhone: null,
+    ownerAddress: null,
     description: null,
     location: null,
     duration: null,
@@ -57,7 +60,10 @@ export class NewRequestComponent implements OnInit {
     this.auth.user$.subscribe(u => {
       this.job = {
         ...this.job,
-        owner: u.email
+        owner: u.email,
+        ownerName: `${u.fname} ${u.lname}`,
+        ownerPhone: u.phone,
+        ownerAddress: u.address
       };
     });
 
@@ -140,7 +146,7 @@ export class NewRequestComponent implements OnInit {
   };
 
   request(): void {
-    this.notif.load('Sending your request...')
+    this.notif.load("Sending your request...");
 
     this.data.addJob(this.job).then(() => {
       this.requestForm.reset;
@@ -150,5 +156,4 @@ export class NewRequestComponent implements OnInit {
     });
     console.log(this.job);
   }
-
 }

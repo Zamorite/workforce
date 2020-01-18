@@ -13,6 +13,7 @@
                 type="text"
                 class="form-control require"
                 name="full_name"
+                [(ngModel)]="email"
                 placeholder="Email Address*"
                 formControlName="email"
               />
@@ -42,9 +43,9 @@
                 <input type="checkbox" />
                 <span class="control__indicator"></span>
               </label> -->
-              <!-- <a href="#" class="forget_password">
+              <a title="An email with reset link would be sent to the email address specified above." class="cp" (click)="forgotPwd()" class="forget_password">
                 Forgot Password
-              </a> -->
+              </a>
               <!-- Todo: Implement the Forgot Password Feature! -->
             </div>
             <div class="header_btn search_btn login_btn jb_cover">

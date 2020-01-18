@@ -38,7 +38,7 @@
               </li>
               <li>
                 <a
-                  [routerLink]="['/', 'auth', 'sign_up']"
+                  [routerLink]="['/', 'auth', 'sign_up', {'role': 'employer'}]"
                   routerLinkActive="router-link-active"
                   class="cp"
                   ><i class="fas fa-power-off"></i> sign up
@@ -192,6 +192,54 @@
 
                       <div *ngIf="formErrors.expiryDate" class="text-danger">
                         <small class="mr-1">{{ formErrors.expiryDate }}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="contect_form3">
+                      <label>your fullname</label>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Your Fullname"
+                        formControlName="ownerName"
+                        [(ngModel)]="job.ownerName"
+                      />
+
+                      <div *ngIf="formErrors.ownerName" class="text-danger">
+                        <small class="mr-1">{{ formErrors.ownerName }}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="contect_form3">
+                      <label>your phone number</label>
+                      <input
+                        type="email"
+                        name="owner"
+                        placeholder="your phone number"
+                        formControlName="ownerPhone"
+                        [(ngModel)]="job.ownerPhone"
+                      />
+
+                      <div *ngIf="formErrors.ownerPhone" class="text-danger">
+                        <small class="mr-1">{{ formErrors.ownerPhone }}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="contect_form3">
+                      <label>your address</label>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Your Address"
+                        formControlName="ownerAddress"
+                        [(ngModel)]="job.ownerAddress"
+                      />
+
+                      <div *ngIf="formErrors.ownerAddress" class="text-danger">
+                        <small class="mr-1">{{ formErrors.ownerAddress }}</small>
                       </div>
                     </div>
                   </div>

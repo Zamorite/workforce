@@ -17,6 +17,9 @@ export class PostJobComponent implements OnInit {
 
   job: Job = {
     title: null,
+    ownerName: null,
+    ownerPhone: null,
+    ownerAddress: null,
     description: null,
     location: null,
     duration: null,
@@ -61,6 +64,9 @@ export class PostJobComponent implements OnInit {
   buildForm(): void {
     this.requestForm = this.fb.group({
       title: ["", [Validators.required, Validators.minLength(2)]],
+      ownerName: ["", [Validators.required, Validators.minLength(2)]],
+      ownerPhone: ["", [Validators.required, Validators.minLength(10)]],
+      ownerAddress: ["", [Validators.required, Validators.minLength(10)]],
       owner: ["", [Validators.required, Validators.email]],
       description: ["", [Validators.required, Validators.minLength(25)]],
       location: ["", [Validators.required, Validators.minLength(10)]],
@@ -95,6 +101,9 @@ export class PostJobComponent implements OnInit {
 
   formErrors = {
     title: "",
+    ownerName: "",
+    ownerPhone: "",
+    ownerAddress: "",
     owner: "",
     description: "",
     location: "",
@@ -109,9 +118,21 @@ export class PostJobComponent implements OnInit {
       required: "Job title is required.",
       minlength: "This must be at least 2 characters long."
     },
+    ownerName: {
+      required: "Your Fullname is required.",
+      minlength: "This must be at least 2 characters long."
+    },
     owner: {
       required: "Your email is required.",
       email: "Please use a valid email."
+    },
+    ownerPhone: {
+      required: "Your phone number is required.",
+      minlength: "This must be at least 10 characters long."
+    },
+    ownerAddress: {
+      required: "Your address is required.",
+      minlength: "This must be at least 10 characters long."
     },
     description: {
       required: "Job description is required.",

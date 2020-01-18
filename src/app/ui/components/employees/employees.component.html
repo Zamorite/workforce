@@ -16,7 +16,10 @@
       >
         <div class="job_list recent_app_1">
           <div class="recent_img">
-            <img src="https://www.gravatar.com/avatar/{{c.email}}?d=retro" alt="post_img" />
+            <img
+              src="https://www.gravatar.com/avatar/{{ c.email }}?d=retro"
+              alt="post_img"
+            />
           </div>
           <div class="recent_cntnt">
             <h6>
@@ -38,11 +41,11 @@
 
         <div class="job_list_next recent_app_1">
           <div class="header_btn search_btn jb_cover">
-            <a href="mailto:{{ c.email }}" class="float-right mr-4 mb-3">
+            <a href="tel:{{ c.phone }}" class="float-right mr-4 mb-3">
               Call
               <i class="ml-1 fas fa-phone"></i>
             </a>
-            <a href="tel:{{ c.phone }}" class="float-right mr-4 mb-3">
+            <a href="mailto:{{ c.email }}" class="float-right mr-4 mb-3">
               Send Mail
               <i class="ml-1 fas fa-envelope"></i>
             </a>

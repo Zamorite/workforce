@@ -16,7 +16,6 @@ import { EmployeesComponent } from "./ui/components/employees/employees.componen
 import { HomeComponent } from "./ui/pages/home/home.component";
 import { HeaderComponent } from "./ui/components/header/header.component";
 import { FooterComponent } from "./ui/components/footer/footer.component";
-import { OneSignalComponent } from "./ui/components/one-signal/one-signal.component";
 import { AngularFireModule } from "@angular/fire";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "./core/services/auth.service";
@@ -48,7 +47,6 @@ const fireConfig = environment.fireConfig;
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    OneSignalComponent,
     RequestComponent,
     RequestsComponent,
     NewRequestComponent,

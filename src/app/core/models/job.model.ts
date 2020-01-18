@@ -1,6 +1,9 @@
 export interface Job {
   owner?: any;
   id?: string;
+  ownerName?: string;
+  ownerPhone?: string;
+  ownerAddress?: string;
   title: string;
   description: string;
   location: string;

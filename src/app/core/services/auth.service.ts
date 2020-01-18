@@ -33,7 +33,8 @@ export class AuthService {
     "auth/operation-not-allowed": "Hello hacker! Such things don't work here.",
     "auth/network-request-failed":
       "You seem to be offline.  Please check your connection and try again.",
-    "auth/timeout": "Looks like we ran out of time. Please try again."
+    "auth/timeout": "Looks like we ran out of time. Please try again.",
+    "auth/invalid-email": "Your email address doesn't look quite right.",
   };
 
   constructor(
@@ -164,10 +165,20 @@ export class AuthService {
 
   // *reset password
   resetPassword(email: string) {
+    this.notif.load('Sending Reset Link...');
     var auth = firebase.auth();
+
     return auth
       .sendPasswordResetEmail(email)
-      .then(() => console.log("email sent"))
-      .catch(error => console.log(error));
+      .then(() => {
+        console.log("success");
+        this.notif.remove();
+        this.notif.success(`Reset link has been sent to ${email}`);
+      })
+      .catch(error => {
+        console.log(error);
+        this.notif.remove();
+        this.notif.logError(this.errorMap[error.code]);
+      });
   }
 }

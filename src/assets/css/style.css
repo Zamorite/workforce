@@ -181,7 +181,7 @@ a:hover {
 }
 #return-to-top {
    position: fixed;
-    bottom: 104px;
+    bottom: 35px;
     right: 35px;
     display: block;
     display: none;
@@ -5615,14 +5615,14 @@ text-align:center;
     outline: none;
 }
 .active_class3, .blue_main_menu .view_all_job a, .blue_main_menu ul li:hover .gc_main_navigation, .blue_main_menu ul li.active > .gc_main_navigation{
-	color:#b446ff !important;
+	color:#bf865d !important;
 }
 .blue_main_menu ul li .gc_main_navigation:before, .blue_main_menu ul li.active > .gc_main_navigation:before {
-    background: #b446ff;
-    -webkit-mask-image: linear-gradient(-75deg, rgba(40, 167, 69, 0.2) 50%, #b446ff 50%, #b446ff 70%);
+    background: #bf865d;
+    -webkit-mask-image: linear-gradient(-75deg, rgba(40, 167, 69, 0.2) 50%, #bf865d 50%, #bf865d 70%);
 }
 .blue_main_menu ul ul, .blue_main_menu ul li .mega-menu {
-    border-top: 3px solid #b446ff;
+    border-top: 3px solid #bf865d;
 }
 .blue_main_menu .parent a:hover, .active_class2:before, .blue_sub_menu .jen_tabs_conent_list li a:hover, .jb_3_profile_box .list li a:hover{
     background:  background: rgb(180, 70, 255);
@@ -5631,13 +5631,13 @@ text-align:center;
     background: linear-gradient(90deg, rgb(180, 70, 255) 25%, rgb(109, 104, 254) 100%);;
 }
 .blue_main_menu ul li a i, .blue_sub_menu .jen_tabs_conent_list h1, .blue_sub_menu .open_job_text p, .jb_3_profile_box .list li a i{
-	color:#b446ff;
+	color:#bf865d;
 }
 .blue_sub_menu .jn_menu_partion_div, .jb_3_profile_box .list{
-    border-top: 2px solid #b446ff;
+    border-top: 2px solid #bf865d;
 }
 .cursor3 {
-    border: 1px solid #b446ff;
+    border: 1px solid #bf865d;
 }
 .main_slider_wrapper{
 	position:relative;
@@ -5732,7 +5732,7 @@ width:100%;
     transition: all 0.5s;
 }
 .slider_icon_list li a:hover i:before{
-	color:#b446ff;
+	color:#bf865d;
 	   -webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
     -ms-transition: all 0.5s;
@@ -5757,7 +5757,7 @@ width:100%;
 	text-align:center;
     background:#f6edff;
 	overflow:hidden;
-	border:1px solid #d4bdff;
+	border:1px solid #D8D8D8;
     -webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
     -ms-transition: all 0.5s;
@@ -5775,7 +5775,7 @@ width:100%;
     line-height: 50px;
 	overflow:hidden;
 	background:#f6edff;
-	border:1px solid #d4bdff;
+	border:1px solid #D8D8D8;
 	text-align:center;
     -webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
@@ -5803,7 +5803,7 @@ width:100%;
     transition: all 0.5s;
 }
 .carousel-nevigation > .next i:before,.carousel-nevigation > .prev i:before{
-	color:#d4bdff;
+	color:#D8D8D8;
 	font-size:20px;
 	-webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
@@ -5812,7 +5812,7 @@ width:100%;
     transition: all 0.5s;
 }
 .carousel-nevigation > .next:hover, .carousel-nevigation > .prev:hover{
-	background:#9c52ff;
+	background:#bf865d;
 }
 .carousel-nevigation > .next:hover i:before, .carousel-nevigation > .prev:hover i:before{
 	color:#fff;
@@ -5989,7 +5989,7 @@ width:100%;
 	color:#222;
 }
 .index3_listing_jobs .jp_job_post_right_cont li i, .control_wrapper .services_content:hover h3 a {
-    color: #b446ff;
+    color: #bf865d;
 }
 .index3_listing_jobs .jp_job_post_right_cont li{
 	float:left;
@@ -6063,7 +6063,7 @@ width:100%;
 }
 .counter_3_wrapper{
 	overflow:visible;
-	background:#f2efff;
+	background:rgba(216, 216, 216, 0.507);
 }
 .counter_index3_right{
 	text-align:right;
@@ -6206,7 +6206,7 @@ width:100%;
 	display:inline-block !important;
 }
 .client_wrapper .owl-theme .owl-nav .owl-prev:hover, .client_wrapper .owl-theme .owl-nav .owl-next:hover{
-    color: #b446ff;
+    color: #bf865d;
 	-webkit-transition: all 0.5s;
     -o-transition: all 0.5s;
     -ms-transition: all 0.5s;
@@ -6231,7 +6231,7 @@ width:100%;
 	text-transform:capitalize;
 }
 .client_wrapper_cntnt h1 a:hover{
-	color:#b446ff;
+	color:#bf865d;
 }
 .client_wrapper_cntnt [class*=bubble-] {
     -webkit-animation-name: bubbleMover;
@@ -6413,7 +6413,7 @@ width:100%;
 	margin-top: 23px;
 }
 .jp_regis_left_side_box_wrapper:hover i:before, .jp_regis_right_side_box:hover i:before{
-	color:#7c61fe;
+	color:#bf865d;
 		-webkit-transition: all 0.5s;
 	-o-transition: all 0.5s;
 	-ms-transition: all 0.5s;
@@ -6634,7 +6634,6 @@ background:#fff;
 }
 .chat-box-body:after {
 	content: "";
-	background-image: url(../images/chat.png);
     height: 100%;
     background-position: center 0;
     background-size: cover;
