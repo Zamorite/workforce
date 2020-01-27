@@ -5,7 +5,7 @@ import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { AuthService } from "src/app/core/services/auth.service";
 import { UploadService } from "src/app/core/services/upload.service";
 import { NotifService } from "src/app/core/services/notif.service";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-sign-up",
@@ -87,7 +87,6 @@ export class SignUpComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    
     this.route.params.subscribe(params => {
       if (params["role"]) {
         this.role = <string>params["role"];
@@ -102,7 +101,7 @@ export class SignUpComponent implements OnInit {
       fname: ["", [Validators.required, Validators.minLength(2)]],
       lname: ["", [Validators.required, Validators.minLength(2)]],
       email: ["", [Validators.required, Validators.email]],
-      phone: ["", [Validators.required, Validators.minLength(10)]],
+      phone: ["", [Validators.required, Validators.minLength(11)]],
       address: ["", [Validators.required, Validators.minLength(10)]],
 
       password: [
@@ -126,14 +125,14 @@ export class SignUpComponent implements OnInit {
       sector: ["", [Validators.required]],
 
       referee1Name: ["", [Validators.required, Validators.minLength(2)]],
-      referee1Phone: ["", [Validators.required, Validators.minLength(10)]],
+      referee1Phone: ["", [Validators.required, Validators.minLength(11)]],
       referee1Email: ["", [Validators.required, Validators.email]],
       referee1Job: ["", [Validators.required, Validators.minLength(2)]],
       referee1Rel: ["", [Validators.required, Validators.minLength(2)]],
       referee1Address: ["", [Validators.required, Validators.minLength(10)]],
 
       referee2Name: ["", [Validators.required, Validators.minLength(2)]],
-      referee2Phone: ["", [Validators.required, Validators.minLength(10)]],
+      referee2Phone: ["", [Validators.required, Validators.minLength(11)]],
       referee2Email: ["", [Validators.required, Validators.email]],
       referee2Job: ["", [Validators.required, Validators.minLength(2)]],
       referee2Rel: ["", [Validators.required, Validators.minLength(2)]],
@@ -227,7 +226,7 @@ export class SignUpComponent implements OnInit {
     },
     phone: {
       required: "Phone is required.",
-      minlength: "Phone must be at least 10 characters long."
+      minlength: "Phone must be at least 11 characters long."
     },
     address: {
       required: "Address is required.",
@@ -259,7 +258,7 @@ export class SignUpComponent implements OnInit {
     },
     referee1Phone: {
       required: "Referee's phone number is required.",
-      minlength: "Referee's phone number must be at least 10 characters long."
+      minlength: "Referee's phone number must be at least 11 characters long."
     },
     referee1Email: {
       required: "Referee's email is required.",
@@ -284,7 +283,7 @@ export class SignUpComponent implements OnInit {
     },
     referee2Phone: {
       required: "Referee's phone number is required.",
-      minlength: "Referee's phone number must be at least 10 characters long."
+      minlength: "Referee's phone number must be at least 11 characters long."
     },
     referee2Email: {
       required: "Referee's email is required.",
@@ -333,18 +332,14 @@ export class SignUpComponent implements OnInit {
         .upload(this.proof, "proofs", pUrl => {
           user.proofURL = pUrl;
 
-          this.auth.emailSignUp(user, this.role).then(() => {
-            this.notif.remove();
-            this.notif.success(`Welcome on board, ${user.fname}.`);
-            // this.projectData.reset();
-          });
+          this.auth.emailSignUp(user, this.role);
         })
-        .catch(e => this.notif.logError(e));
+        .catch(e => {
+          this.notif.logError(e);
+          this.notif.remove();
+        });
     } else {
-      this.auth.emailSignUp(user, this.role).then(() => {
-        this.notif.remove();
-        this.notif.success(`Welcome on board, ${user.fname}.`);
-      });
+      this.auth.emailSignUp(user, this.role);
     }
     // });
   }

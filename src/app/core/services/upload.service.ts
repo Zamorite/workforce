@@ -51,15 +51,15 @@ export class UploadService {
     }, (error: any) => {
       switch (error.code) {
         case 'storage/unauthorized':
-          this.notif.logError('User doesn\'t have permission to access the object');
+          this.notif.logError('You do not have permission to access the object');
           break;
 
         case 'storage/canceled':
-          this.notif.logError('User canceled the upload');
+          this.notif.logError('Looks like you canceled the upload');
           break;
 
         case 'storage/unknown':
-          this.notif.logError('Unknown error occurred, inspect error.serverResponse');
+          this.notif.logError('Definitely not your fault. Our bad!');
           break;
       }
 

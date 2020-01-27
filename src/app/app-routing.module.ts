@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { Routes, RouterModule, ExtraOptions } from "@angular/router";
 import { SignInComponent } from "./ui/pages/sign-in/sign-in.component";
 import { SignUpComponent } from "./ui/pages/sign-up/sign-up.component";
 import { DashComponent } from "./ui/pages/dash/dash.component";
@@ -88,8 +88,14 @@ const routes: Routes = [
   { path: "**", pathMatch: "full", redirectTo: "" }
 ];
 
+const routerOptions: ExtraOptions = {
+  scrollPositionRestoration: "top",
+  anchorScrolling: "enabled",
+  scrollOffset: [0, 64],
+};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

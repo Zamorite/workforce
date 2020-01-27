@@ -65,7 +65,7 @@ export class PostJobComponent implements OnInit {
     this.requestForm = this.fb.group({
       title: ["", [Validators.required, Validators.minLength(2)]],
       ownerName: ["", [Validators.required, Validators.minLength(2)]],
-      ownerPhone: ["", [Validators.required, Validators.minLength(10)]],
+      ownerPhone: ["", [Validators.required, Validators.minLength(11)]],
       ownerAddress: ["", [Validators.required, Validators.minLength(10)]],
       owner: ["", [Validators.required, Validators.email]],
       description: ["", [Validators.required, Validators.minLength(25)]],
@@ -128,7 +128,7 @@ export class PostJobComponent implements OnInit {
     },
     ownerPhone: {
       required: "Your phone number is required.",
-      minlength: "This must be at least 10 characters long."
+      minlength: "This must be at least 11 characters long."
     },
     ownerAddress: {
       required: "Your address is required.",

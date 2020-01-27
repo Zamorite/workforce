@@ -34,7 +34,7 @@ export class AuthService {
     "auth/network-request-failed":
       "You seem to be offline.  Please check your connection and try again.",
     "auth/timeout": "Looks like we ran out of time. Please try again.",
-    "auth/invalid-email": "Your email address doesn't look quite right.",
+    "auth/invalid-email": "Your email address doesn't look quite right."
   };
 
   constructor(
@@ -71,6 +71,10 @@ export class AuthService {
         this.updateUserData(credential.user, user, role);
         // this.notif.success("Welcome on board.");
         this.router.navigate(["/", "dashboard"]);
+
+        // handle greeting directly
+        this.notif.remove();
+        this.notif.success(`Welcome on board, ${user.fname}.`);
       })
       .catch(error => {
         console.log(error);
@@ -165,7 +169,7 @@ export class AuthService {
 
   // *reset password
   resetPassword(email: string) {
-    this.notif.load('Sending Reset Link...');
+    this.notif.load("Sending Reset Link...");
     var auth = firebase.auth();
 
     return auth

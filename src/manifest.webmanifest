@@ -1,7 +1,7 @@
 {
-  "name": "workforce",
-  "short_name": "workforce",
-  "theme_color": "#1976d2",
+  "name": "Workforce",
+  "short_name": "Workforce",
+  "theme_color": "#BF865D",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
