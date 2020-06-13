@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import {
   AngularFirestore,
-  AngularFirestoreCollection
+  // AngularFirestoreCollection
 } from "@angular/fire/firestore";
-import { AuthService } from "./auth.service";
+// import { AuthService } from "./auth.service";
 import { Observable, combineLatest, of, defer } from "rxjs";
 import { map, defaultIfEmpty, switchMap } from "rxjs/operators";
 import { firestore } from "firebase";
 import { NotifService } from "./notif.service";
-import { UploadService } from "./upload.service";
+// import { UploadService } from "./upload.service";
 import { Job } from "../models/job.model";
 import { User } from "../models/user";
 
@@ -18,9 +18,9 @@ import { User } from "../models/user";
 export class DataService {
   constructor(
     private afs: AngularFirestore,
-    private auth: AuthService,
+    // private auth: AuthService,
     private notif: NotifService,
-    private file: UploadService
+    // private file: UploadService
   ) {}
 
   getUser(email: string): Observable<any> {
@@ -170,6 +170,9 @@ export class DataService {
             .update({ invitations: firestore.FieldValue.increment(1) })
             .catch(err => this.notif.logError(err))
             .finally(() => {
+              // this.afs.collection(`emails`).add(
+
+              // );
               return Promise.resolve(true);
             })
         )

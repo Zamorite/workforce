@@ -296,11 +296,13 @@
                           <small class="mr-1">{{ formErrors.sector }}</small>
                         </div>
                       </div>
+                      
+                      <div class="d-block col-12"><label for="utility_bill">Upload Utility Bill</label></div>
 
                       <div
-                        class="form-group icon_form comments_form mx-auto d-inline-block col-md-6"
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
                       >
-                        <label for="utility_bill">Upload Utility Bill</label>
+                        <!-- <label for="utility_bill">Upload Utility Bill</label> -->
                         <input
                           type="file"
                           #proofInput
@@ -309,7 +311,10 @@
                           placeholder="Utility Bill*"
                           (blur)="setProof($event)"
                         />
-                        <!-- (change)="setProof($event)" -->
+
+                        <!--
+                          *** Don't uncomment!!
+                          (change)="setProof($event)" -->
 
                         <div
                           *ngIf="!['', null].includes(proofError)"
@@ -317,6 +322,38 @@
                         >
                           <small class="mr-1">{{ proofError }}</small>
                         </div>
+
+
+                        
+                        
+
+
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                      <!-- <label for="utility_bill">Selected Files</label> -->
+                        <input
+                          type="text"
+                          class="form-control require"
+                          value="{{ proof ? 'Selected ' + proof.name : 'No bill selected yet !' }}"
+                          disabled
+                        />
+
+                        
+                        <i *ngIf="proof?.type.startsWith('image')" class="fas fa-image"></i>
+                        <!-- <i *ngIf="proof.type == 'application/pdf'" class="fas fa-file-pdf"></i> -->
+                        <ng-container *ngIf="proof?.type.startsWith('application')">
+                          <ng-container *ngIf="proof?.type.endsWith('pdf'); else ms">
+                            <i class="fas fa-file-pdf"></i>
+                          </ng-container>
+                          <ng-template #ms>
+                            <i class="fas fa-file"></i>
+                          </ng-template>            
+                        </ng-container>
+                        
+                        
                       </div>
                     </div>
                   </div>

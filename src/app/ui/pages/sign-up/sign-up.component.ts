@@ -353,6 +353,7 @@ export class SignUpComponent implements OnInit {
       this.proof = files[0];
       this.proofError = null;
     } else {
+      this.proof = null;
       this.proofError =
         "You have to select an utility bill e.g PHCN Bill, Water Bill, etc.";
     }
