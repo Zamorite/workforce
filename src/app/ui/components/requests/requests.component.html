@@ -6,6 +6,7 @@
           <div class="job_main_overflow jb_cover">
             <div class="latest_job_overlow jb_cover">
               <div class="manage_jobs_wrapper jb_cover">
+                <!-- .pending -->
                 <div class="job_list mange_list">
                   <h6>job title</h6>
                 </div>
@@ -24,11 +25,77 @@
               </div>
 
               <div
+                *ngFor="let r of requests | async">
+                <div
+                *ngIf="!r.delivered"
+                  class="latest_job_box jb_cover cp"
+                  [routerLink]="['/', 'dashboard', 'request', r.id]"
+                >
+                  <div class="job_list">
+                    <h6>
+                      <p>{{ r.title }}</p>
+                    </h6>
+                    <p><i class="far fa-envelope"></i> {{ r.owner }}</p>
+                  </div>
+                  <div class="job_list_next">
+                    <p>{{ r.no }}</p>
+                  </div>
+                  <div class="job_list_next">
+                    <p
+                      [ngClass]="{
+                        gn: (r.invited || []).length > r.no,
+                        pen: (r.invited || []).length == r.no,
+                        ex: r.no > (r.invited || []).length
+                      }"
+                    >
+                      {{ (r.invited || []).length }}
+                    </p>
+                  </div>
+                  <div class="job_list_next">
+                    <p
+                      [ngClass]="{
+                        gn: (r.confirmed || []).length >= r.no,
+                        pen: r.no > (r.confirmed || []).length
+                      }"
+                    >
+                      {{ (r.confirmed || []).length }}
+                    </p>
+                  </div>
+                  <!-- <div class="job_list_next">
+                      <p class="gn">active</p>
+                    </div> -->
+                </div>
+              </div>
+
+
+
+
+
+              <div class="manage_jobs_wrapper delivered jb_cover ">
+                <div class="job_list mange_list">
+                  <h6>job title</h6>
+                </div>
+                <div class="job_list_next mange_list">
+                  <h6>requested</h6>
+                </div>
+                <div class="job_list_next mange_list">
+                  <h6>applied</h6>
+                </div>
+                      <div class="job_list_next mange_list">
+                        <h6>delivered</h6>
+                      </div>
+                <!-- <div class="job_list_next mange_list">
+                      <h6>status</h6>
+                  </div> -->
+              </div>
+
+              <div
                 *ngFor="let r of requests | async"
-                class="latest_job_box jb_cover cp"
-                [routerLink]="['/', 'dashboard', 'request', r.id]"
-              >
-                <div class="job_list">
+                >
+                <div *ngIf="r.delivered"
+                  class="latest_job_box jb_cover cp"
+                  [routerLink]="['/', 'dashboard', 'request', r.id]">
+<div class="job_list">
                   <h6>
                     <p>{{ r.title }}</p>
                   </h6>
@@ -37,17 +104,7 @@
                 <div class="job_list_next">
                   <p>{{ r.no }}</p>
                 </div>
-                <div class="job_list_next">
-                  <p
-                    [ngClass]="{
-                      gn: (r.invited || []).length > r.no,
-                      pen: (r.invited || []).length == r.no,
-                      ex: r.no > (r.invited || []).length
-                    }"
-                  >
-                    {{ (r.invited || []).length }}
-                  </p>
-                </div>
+                
                 <div class="job_list_next">
                   <p
                     [ngClass]="{
@@ -58,6 +115,20 @@
                     {{ (r.confirmed || []).length }}
                   </p>
                 </div>
+
+
+                <div class="job_list_next">
+                  <p
+                    [ngClass]="{
+                      gn: (r.confirmed || []).length >= r.no,
+                      pen: r.no > (r.confirmed || []).length
+                    }"
+                  >
+                    <i class="fa fa-check"></i>
+                  </p>
+                </div>
+                </div>
+                
                 <!-- <div class="job_list_next">
                     <p class="gn">active</p>
                   </div> -->

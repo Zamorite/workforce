@@ -2354,6 +2354,12 @@ select label {
   padding: 25px;
   margin-bottom: 20px;
 }
+.manage_jobs_wrapper.pending {
+  background: #FF9500;
+}
+.manage_jobs_wrapper.delivered {
+  background: #76C80E;
+}
 .job_list p i {
   margin-right: 5px;
 }

@@ -170,9 +170,14 @@ export class DataService {
             .update({ invitations: firestore.FieldValue.increment(1) })
             .catch(err => this.notif.logError(err))
             .finally(() => {
-              // this.afs.collection(`emails`).add(
-
-              // );
+              this.afs.collection(`emails`).add(
+                {to: 'someone@example.com',
+                message: {
+                  subject: 'New Job Invite! WorkForce',
+                  text: `You have been sent a job invitation to work as ${job.title} somewhere in ${job.location}.\nFor more details, please log into your account on https://wrk4s.com.`,
+                  html: 'This is the <code>HTML</code> section of the email body.',
+                },}
+              );
               return Promise.resolve(true);
             })
         )
@@ -197,6 +202,14 @@ export class DataService {
             .update({ invitations: firestore.FieldValue.increment(-1) })
             .catch(err => this.notif.logError(err))
             .finally(() => {
+              this.afs.collection(`emails`).add(
+                {to: 'someone@example.com',
+                message: {
+                  subject: 'Withdrawal of Job Invite! WorkForce',
+                  text: `Sorry, your application to work as ${job.title} somewhere in ${job.location} has just been declined.`,
+                  html: 'This is the <code>HTML</code> section of the email body.',
+                },}
+              );
               return Promise.resolve(true);
             })
         )
@@ -247,6 +260,7 @@ export class DataService {
 
   removeApplicant(job: Job, inviteeEmail: string) {
     let alreadConfirmed = (job.confirmed || []).includes(inviteeEmail);
+    // TODO: Might need an email too. Who knows?!
 
     if (alreadConfirmed) {
       const RCol$ = this.afs.collection(`requests`);
@@ -272,7 +286,17 @@ export class DataService {
           .doc(`users/${email}`)
           .update({ delivered: firestore.FieldValue.increment(no) })
           .catch(e => this.notif.logError(e))
-          .finally(() => Promise.resolve(true))
+          .finally(() => {
+            this.afs.collection(`emails`).add(
+              {to: 'someone@example.com',
+              message: {
+                subject: 'Your Workers are Ready! WorkForce',
+                text: `The workers you ordered from WorkForce are ready.\nLog onto https://wrk4s.com to view them.`,
+                html: 'This is the <code>HTML</code> section of the email body.',
+              },}
+            );
+            return Promise.resolve(true);
+          })
       )
       .catch(e => this.notif.logError(e))
       .finally(() => Promise.resolve(true));
