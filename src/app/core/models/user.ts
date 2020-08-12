@@ -31,6 +31,10 @@ export interface User {
   // Strictly for employees
   invitations?: number;
   applications?: number;
+  // last appointment
+  appointDate?: Date;
+  durNum?: number;
+  durType?: string;
 
   profession?: string;
   sector?: string;

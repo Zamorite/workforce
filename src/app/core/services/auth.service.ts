@@ -4,7 +4,7 @@ import * as firebase from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
 import {
   AngularFirestore,
-  AngularFirestoreDocument
+  AngularFirestoreDocument,
 } from "@angular/fire/firestore";
 import { Observable, of } from "rxjs";
 import { switchMap } from "rxjs/operators";
@@ -34,7 +34,7 @@ export class AuthService {
     "auth/network-request-failed":
       "You seem to be offline.  Please check your connection and try again.",
     "auth/timeout": "Looks like we ran out of time. Please try again.",
-    "auth/invalid-email": "Your email address doesn't look quite right."
+    "auth/invalid-email": "Your email address doesn't look quite right.",
   };
 
   constructor(
@@ -45,7 +45,7 @@ export class AuthService {
   ) {
     // *Get auth data, then get firestore user document || null
     this.user$ = this.afAuth.authState.pipe(
-      switchMap(user => {
+      switchMap((user) => {
         if (user) {
           return this.afs.doc<User>(`users/${user.email}`).valueChanges();
         } else {
@@ -66,7 +66,7 @@ export class AuthService {
     // return this.af.auth.createUser(user)
     return this.afAuth.auth
       .createUserWithEmailAndPassword(user.email, user.password)
-      .then(credential => {
+      .then((credential) => {
         console.log("success");
         this.updateUserData(credential.user, user, role);
         // this.notif.success("Welcome on board.");
@@ -76,7 +76,7 @@ export class AuthService {
         this.notif.remove();
         this.notif.success(`Welcome on board, ${user.fname}.`);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.notif.remove();
         this.notif.logError(error);
@@ -94,7 +94,7 @@ export class AuthService {
         this.notif.success("Welcome back.");
         this.router.navigate(["/", "dashboard"]);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.notif.remove();
         this.notif.logError(this.errorMap[error.code]);
@@ -111,7 +111,7 @@ export class AuthService {
   private oAuthLogin(provider, role: String) {
     return this.afAuth.auth
       .signInWithPopup(provider)
-      .then(credential => this.updateUserData(credential.user, null, role));
+      .then((credential) => this.updateUserData(credential.user, null, role));
   }
 
   signOut() {
@@ -129,12 +129,15 @@ export class AuthService {
       ...user,
       uid: fireUser.uid,
       createdAt: new Date(),
+      appointDate: new Date(),
+      durNum: 0,
+      durType: "day",
       email: fireUser.email,
       roles: {
         admin: role == "admin",
         employee: role == "employee",
-        employer: role == "employer"
-      }
+        employer: role == "employer",
+      },
     };
     return userRef.set(data, { merge: true });
   }
@@ -179,7 +182,7 @@ export class AuthService {
         this.notif.remove();
         this.notif.success(`Reset link has been sent to ${email}`);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.notif.remove();
         this.notif.logError(this.errorMap[error.code]);

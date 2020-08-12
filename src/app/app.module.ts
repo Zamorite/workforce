@@ -3,9 +3,7 @@ import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
-import { NgxOneSignalModule } from "ngx-onesignal";
 import { SignInComponent } from "./ui/pages/sign-in/sign-in.component";
 import { SignUpComponent } from "./ui/pages/sign-up/sign-up.component";
 import { DashComponent } from "./ui/pages/dash/dash.component";
@@ -30,7 +28,8 @@ import { RDashComponent } from "./ui/components/dash/r-dash/r-dash.component";
 import { ADashComponent } from "./ui/components/dash/a-dash/a-dash.component";
 import { DashSummaryComponent } from "./ui/components/dash-summary/dash-summary.component";
 import { PostJobComponent } from "./pages/post-job/post-job.component";
-import { AppliedComponent } from './ui/components/applied/applied.component';
+import { AppliedComponent } from "./ui/components/applied/applied.component";
+import { MomentModule } from "ngx-moment";
 
 const fireConfig = environment.fireConfig;
 
@@ -56,7 +55,7 @@ const fireConfig = environment.fireConfig;
     ADashComponent,
     DashSummaryComponent,
     PostJobComponent,
-    AppliedComponent
+    AppliedComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,14 +65,9 @@ const fireConfig = environment.fireConfig;
     AngularFireModule.initializeApp(fireConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    ServiceWorkerModule.register("OneSignalSDKWorker.js", {
-      enabled: environment.production
-    }),
-    NgxOneSignalModule.forRoot({
-      appId: "6607c69b-1a8c-4317-aec8-d9e4526d98eb"
-    }),
+    MomentModule.forRoot(),
   ],
   providers: [AuthService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

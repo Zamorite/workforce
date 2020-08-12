@@ -13,14 +13,13 @@ import { Job } from "../models/job.model";
 import { User } from "../models/user";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class DataService {
   constructor(
     private afs: AngularFirestore,
     // private auth: AuthService,
-    private notif: NotifService,
-    // private file: UploadService
+    private notif: NotifService // private file: UploadService // private moment: M
   ) {}
 
   getUser(email: string): Observable<any> {
@@ -29,7 +28,7 @@ export class DataService {
   }
 
   getUserBySector(sector: string): Observable<any> {
-    const userCol$ = this.afs.collection(`users/`, ref =>
+    const userCol$ = this.afs.collection(`users/`, (ref) =>
       ref.where("sector", "==", sector)
     );
     return userCol$.valueChanges();
@@ -42,13 +41,13 @@ export class DataService {
 
   getEmployees() {
     return this.afs
-      .collection(`users`, ref => ref.where("roles.employee", "==", true))
+      .collection(`users`, (ref) => ref.where("roles.employee", "==", true))
       .valueChanges();
   }
 
   getEmployers() {
     return this.afs
-      .collection(`users`, ref => ref.where("roles.employer", "==", true))
+      .collection(`users`, (ref) => ref.where("roles.employer", "==", true))
       .valueChanges();
   }
 
@@ -60,22 +59,22 @@ export class DataService {
       const joinKeys = {};
 
       return requests$.pipe(
-        switchMap(req => {
+        switchMap((req) => {
           // Unique User IDs
           requests = req;
-          const uids = Array.from(new Set(req.map(v => v.owner)));
+          const uids = Array.from(new Set(req.map((v) => v.owner)));
 
           // Firestore User Doc Reads
-          const userDocs = uids.map(u =>
+          const userDocs = uids.map((u) =>
             this.afs.doc(`users/${u}`).valueChanges()
           );
 
           return userDocs.length ? combineLatest(userDocs) : of([]);
         }),
-        map(arr => {
-          arr.forEach(v => (joinKeys[(v as any).uid] = v));
+        map((arr) => {
+          arr.forEach((v) => (joinKeys[(v as any).uid] = v));
 
-          requests = requests.map(v => {
+          requests = requests.map((v) => {
             return { ...v, owner: joinKeys[v.owner] };
           });
 
@@ -92,7 +91,7 @@ export class DataService {
       const joinKeys = {};
 
       return request$.pipe(
-        switchMap(req => {
+        switchMap((req) => {
           // Unique User IDs
           request = req;
 
@@ -103,7 +102,7 @@ export class DataService {
 
           return userDoc ? userDoc : of(null);
         }),
-        map(doc$ => {
+        map((doc$) => {
           joinKeys[(doc$ as any).uid] = doc$;
           request = { ...request, owner: joinKeys[request.owner] };
 
@@ -130,14 +129,16 @@ export class DataService {
         this.afs
           .doc(`users/${request.owner}`)
           .update({ requests: firestore.FieldValue.increment(1) })
-          .catch(e => console.warn("Could not update number of requests."));
+          .catch((e) => console.warn("Could not update number of requests."));
 
         this.afs
           .doc(`users/admin@wrk4s.com`)
           .update({ newRequests: firestore.FieldValue.increment(1) })
-          .catch(e => console.warn("Could not update number of new requests."));
+          .catch((e) =>
+            console.warn("Could not update number of new requests.")
+          );
       })
-      .catch(err => {
+      .catch((err) => {
         this.notif.remove();
         this.notif.logError(err);
       })
@@ -150,7 +151,7 @@ export class DataService {
     const request$ = this.afs.doc(`requests/${id}`);
     request$
       .delete()
-      .catch(err => this.notif.logError(err))
+      .catch((err) => this.notif.logError(err))
       .finally(() => {
         return Promise.resolve(true);
       });
@@ -165,23 +166,24 @@ export class DataService {
 
       return RCol$.doc(job.id)
         .update({ invitees: firestore.FieldValue.arrayUnion(inviteeEmail) })
-        .then(res =>
+        .then((res) =>
           userDoc$
             .update({ invitations: firestore.FieldValue.increment(1) })
-            .catch(err => this.notif.logError(err))
+            .catch((err) => this.notif.logError(err))
             .finally(() => {
-              this.afs.collection(`emails`).add(
-                {to: 'someone@example.com',
+              this.afs.collection(`emails`).add({
+                to: inviteeEmail,
                 message: {
-                  subject: 'New Job Invite! WorkForce',
+                  subject: "New Job Invite! WorkForce",
                   text: `You have been sent a job invitation to work as ${job.title} somewhere in ${job.location}.\nFor more details, please log into your account on https://wrk4s.com.`,
-                  html: 'This is the <code>HTML</code> section of the email body.',
-                },}
-              );
+                  // html:
+                  //   "This is the <code>HTML</code> section of the email body.",
+                },
+              });
               return Promise.resolve(true);
             })
         )
-        .catch(err => this.notif.logError(err))
+        .catch((err) => this.notif.logError(err))
         .finally(() => {
           return Promise.resolve(true);
         });
@@ -197,23 +199,24 @@ export class DataService {
 
       return RCol$.doc(job.id)
         .update({ invitees: firestore.FieldValue.arrayRemove(inviteeEmail) })
-        .then(res =>
+        .then((res) =>
           userDoc$
             .update({ invitations: firestore.FieldValue.increment(-1) })
-            .catch(err => this.notif.logError(err))
+            .catch((err) => this.notif.logError(err))
             .finally(() => {
-              this.afs.collection(`emails`).add(
-                {to: 'someone@example.com',
+              this.afs.collection(`emails`).add({
+                to: inviteeEmail,
                 message: {
-                  subject: 'Withdrawal of Job Invite! WorkForce',
+                  subject: "Withdrawal of Job Invite! WorkForce",
                   text: `Sorry, your application to work as ${job.title} somewhere in ${job.location} has just been declined.`,
-                  html: 'This is the <code>HTML</code> section of the email body.',
-                },}
-              );
+                  // html:
+                  //   "This is the <code>HTML</code> section of the email body.",
+                },
+              });
               return Promise.resolve(true);
             })
         )
-        .catch(err => this.notif.logError(err))
+        .catch((err) => this.notif.logError(err))
         .finally(() => {
           return Promise.resolve(true);
         });
@@ -232,26 +235,32 @@ export class DataService {
 
       return confirmedCol$
         .set(user)
-        .then(res =>
+        .then((res) =>
           RCol$.doc(job.id)
             .update({
               confirmed: firestore.FieldValue.arrayUnion(user.email),
-              invitees: firestore.FieldValue.arrayRemove(user.email)
+              invitees: firestore.FieldValue.arrayRemove(user.email),
             })
-            .then(res =>
+            .then((res) =>
               userDoc$
-                .update({ applications: firestore.FieldValue.increment(1) })
-                .catch(err => this.notif.logError(err))
+                .update({
+                  applications: firestore.FieldValue.increment(1),
+                  // free: ,
+                  appointDate: job.expiryDate,
+                  durNum: job.durNum,
+                  durType: job.durType,
+                })
+                .catch((err) => this.notif.logError(err))
                 .finally(() => {
                   return Promise.resolve(true);
                 })
             )
-            .catch(err => this.notif.logError(err))
+            .catch((err) => this.notif.logError(err))
             .finally(() => {
               return Promise.resolve(true);
             })
         )
-        .catch(err => this.notif.logError(err))
+        .catch((err) => this.notif.logError(err))
         .finally(() => {
           return Promise.resolve(true);
         });
@@ -260,7 +269,7 @@ export class DataService {
 
   removeApplicant(job: Job, inviteeEmail: string) {
     let alreadConfirmed = (job.confirmed || []).includes(inviteeEmail);
-    // TODO: Might need an email too. Who knows?!
+    // DONE: Might need an email too. Who knows?!
 
     if (alreadConfirmed) {
       const RCol$ = this.afs.collection(`requests`);
@@ -268,10 +277,22 @@ export class DataService {
         `invites/${job.id}/confirmed/${inviteeEmail}`
       );
 
-      return confirmedCol$.delete().then(res =>
+      return confirmedCol$.delete().then((res) =>
         RCol$.doc(job.id)
           .update({ confirmed: firestore.FieldValue.arrayRemove(inviteeEmail) })
-          .catch(err => this.notif.logError(err))
+          .then(() => {
+            this.afs.collection(`emails`).add({
+              to: inviteeEmail,
+              message: {
+                subject: "Withdrawal of Job Invite! WorkForce",
+                text: `Sorry, your application to work as ${job.title} somewhere in ${job.location} has just been closed.`,
+                // html:
+                //   "This is the <code>HTML</code> section of the email body.",
+              },
+            });
+            return Promise.resolve(true);
+          })
+          .catch((err) => this.notif.logError(err))
           .finally(() => Promise.resolve(true))
       );
     }
@@ -281,24 +302,25 @@ export class DataService {
     const job$ = this.afs.doc(`requests/${reqId}`);
     return job$
       .update({ delivered: true })
-      .then(res =>
+      .then((res) =>
         this.afs
           .doc(`users/${email}`)
           .update({ delivered: firestore.FieldValue.increment(no) })
-          .catch(e => this.notif.logError(e))
+          .catch((e) => this.notif.logError(e))
           .finally(() => {
-            this.afs.collection(`emails`).add(
-              {to: 'someone@example.com',
+            this.afs.collection(`emails`).add({
+              to: email,
               message: {
-                subject: 'Your Workers are Ready! WorkForce',
+                subject: "Your Workers are Ready! WorkForce",
                 text: `The workers you ordered from WorkForce are ready.\nLog onto https://wrk4s.com to view them.`,
-                html: 'This is the <code>HTML</code> section of the email body.',
-              },}
-            );
+                // html:
+                //   "This is the <code>HTML</code> section of the email body.",
+              },
+            });
             return Promise.resolve(true);
           })
       )
-      .catch(e => this.notif.logError(e))
+      .catch((e) => this.notif.logError(e))
       .finally(() => Promise.resolve(true));
   }
 
@@ -308,7 +330,7 @@ export class DataService {
   }
 
   getRequests(): Observable<Job[]> {
-    const ICol$ = this.afs.collection<Job>("requests", ref =>
+    const ICol$ = this.afs.collection<Job>("requests", (ref) =>
       ref.orderBy("createdAt", "desc")
     );
     return ICol$.valueChanges();
@@ -318,25 +340,25 @@ export class DataService {
     this.afs
       .doc(`users/admin@wrk4s.com`)
       .update({ newRequests: 0 })
-      .catch(e => console.warn("Could not clear requests."));
+      .catch((e) => console.warn("Could not clear requests."));
   }
 
   getMyRequests(email: string): Observable<Job[]> {
-    const ICol$ = this.afs.collection<Job>("requests", ref =>
+    const ICol$ = this.afs.collection<Job>("requests", (ref) =>
       ref.where("owner", "==", email).orderBy("createdAt", "desc")
     );
     return ICol$.valueChanges();
   }
 
   getDeliveredRequests(): Observable<Job[]> {
-    const ICol$ = this.afs.collection<Job>("requests", ref =>
+    const ICol$ = this.afs.collection<Job>("requests", (ref) =>
       ref.where("delivered", "==", true).orderBy("createdAt", "desc")
     );
     return ICol$.valueChanges();
   }
 
   getMyInvites(email: string): Observable<Job[]> {
-    const ICol$ = this.afs.collection<Job>("requests", ref => {
+    const ICol$ = this.afs.collection<Job>("requests", (ref) => {
       return ref.where("invitees", "array-contains", email);
     });
     const invites$ = ICol$.valueChanges();
@@ -344,7 +366,7 @@ export class DataService {
   }
 
   getMyApplications(email: string): Observable<Job[]> {
-    const ICol$ = this.afs.collection<Job>("requests", ref => {
+    const ICol$ = this.afs.collection<Job>("requests", (ref) => {
       return ref.where("confirmed", "array-contains", email);
     });
     const invites$ = ICol$.valueChanges();

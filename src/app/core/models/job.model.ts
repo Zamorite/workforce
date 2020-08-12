@@ -7,7 +7,9 @@ export interface Job {
   title: string;
   description: string;
   location: string;
-  duration: string;
+  duration?: string;
+  durNum?: number;
+  durType?: string;
   expiryDate: Date;
   no: number;
   sector: string;

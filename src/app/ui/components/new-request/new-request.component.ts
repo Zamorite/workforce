@@ -10,7 +10,7 @@ import { NotifService } from "src/app/core/services/notif.service";
 @Component({
   selector: "app-new-request",
   templateUrl: "./new-request.component.html",
-  styleUrls: ["./new-request.component.scss"]
+  styleUrls: ["./new-request.component.scss"],
 })
 export class NewRequestComponent implements OnInit {
   requestForm: FormGroup;
@@ -22,10 +22,11 @@ export class NewRequestComponent implements OnInit {
     ownerAddress: null,
     description: null,
     location: null,
-    duration: null,
+    durNum: null,
+    durType: null,
     expiryDate: null,
     no: 1,
-    sector: null
+    sector: null,
   };
 
   sectors = [
@@ -44,8 +45,10 @@ export class NewRequestComponent implements OnInit {
     "Marketing and Creative",
     "Engineering",
     "Teachers",
-    "Other"
+    "Other",
   ];
+
+  durations = ["day", "week", "month", "year"];
 
   constructor(
     public util: UtilService,
@@ -57,13 +60,13 @@ export class NewRequestComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.auth.user$.subscribe(u => {
+    this.auth.user$.subscribe((u) => {
       this.job = {
         ...this.job,
         owner: u.email,
         ownerName: `${u.fname} ${u.lname}`,
         ownerPhone: u.phone,
-        ownerAddress: u.address
+        ownerAddress: u.address,
       };
     });
 
@@ -75,13 +78,16 @@ export class NewRequestComponent implements OnInit {
       title: ["", [Validators.required, Validators.minLength(2)]],
       description: ["", [Validators.required, Validators.minLength(25)]],
       location: ["", [Validators.required, Validators.minLength(10)]],
-      duration: ["", [Validators.required, Validators.minLength(5)]],
+      durNum: ["", [Validators.required, Validators.min(1)]],
+      durType: ["", [Validators.required]],
       expiryDate: ["", [Validators.required]],
       no: ["", [Validators.required, Validators.min(1)]],
-      sector: ["", [Validators.required]]
+      sector: ["", [Validators.required]],
     });
 
-    this.requestForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    this.requestForm.valueChanges.subscribe((data) =>
+      this.onValueChanged(data)
+    );
     this.onValueChanged(); // reset validation messages
   }
 
@@ -108,41 +114,46 @@ export class NewRequestComponent implements OnInit {
     title: "",
     description: "",
     location: "",
-    duration: "",
+    durNum: "",
+    durType: "",
     expiryDate: "",
     no: "",
-    sector: ""
+    sector: "",
   };
 
   validationMessages = {
     title: {
       required: "Job title is required.",
-      minlength: "This must be at least 2 characters long."
+      minlength: "This must be at least 2 characters long.",
     },
     description: {
       required: "Job description is required.",
-      minlength: "This must be at least 25 characters long."
+      minlength: "This must be at least 25 characters long.",
     },
     location: {
       required: "Job location is required.",
-      minlength: "This must be at least 10 characters long."
+      minlength: "This must be at least 10 characters long.",
     },
-    duration: {
-      required: "Job duration is required.",
-      minlength: "This must be at least 5 characters long."
+    durNum: {
+      required: "How long?",
+      min: "Why are you here, then?",
     },
     expiryDate: {
-      required: "When does this vacancy expire?"
+      required: "When does this vacancy expire?",
       // minlength: "This must be at least 2 characters long."
     },
     no: {
       required: "How many people are needed?",
-      min: "Why are you here, then?"
+      min: "Why are you here, then?",
     },
     sector: {
-      required: "Choose an appropriate sector for your potential employees"
+      required: "Choose an appropriate sector for your potential employees",
       // minlength: "This must be at least 2 characters long."
-    }
+    },
+    durType: {
+      required: "Choose a duration unit",
+      // minlength: "This must be at least 2 characters long."
+    },
   };
 
   request(): void {

@@ -60,8 +60,11 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
               <div class="contect_form3 form-group">
                 <label>job sector</label>
-                <select class="form-control" formControlName="sector" [(ngModel)]="job.sector">
-                  
+                <select
+                  class="form-control"
+                  formControlName="sector"
+                  [(ngModel)]="job.sector"
+                >
                   <option *ngFor="let s of sectors" [value]="s">{{ s }}</option>
                   <option [value]="null" disabled selected
                     >Select Sector</option
@@ -92,16 +95,43 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
               <div class="contect_form3">
                 <label>work duration</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="For how long would workers work?"
-                  formControlName="duration"
-                  [(ngModel)]="job.duration"
-                />
+                <div>
+                  <input
+                    type="number"
+                    name="duration-number"
+                    class="col-md-4"
+                    placeholder="For how long would workers work?"
+                    formControlName="durNum"
+                    [(ngModel)]="job.durNum"
+                  />
+                  <!-- <input
+                    type="text"
+                    name="name"
+                    class="col-md-6 offset-md-2"
+                    placeholder="For how long would workers work?"
+                    formControlName="duration"
+                    [(ngModel)]="job.duration"
+                    /> -->
+                  <select
+                    class="float-none col-md-6 offset-md-2"
+                    formControlName="durType"
+                    [(ngModel)]="job.durType"
+                  >
+                    <option *ngFor="let d of durations" [value]="d">{{
+                      d + (job.durNum > 1 ? "s" : "")
+                    }}</option>
+                    <option [value]="null" disabled selected
+                      >Duration Type</option
+                    >
+                  </select>
+                </div>
 
-                <div *ngIf="formErrors.duration" class="text-danger">
-                  <small class="mr-1">{{ formErrors.duration }}</small>
+                <div
+                  *ngIf="formErrors.durNum || formErrors.durType"
+                  class="text-danger"
+                >
+                  <small class="mr-1">{{ formErrors.durNum }}</small>
+                  <small class="mr-1">{{ formErrors.durType }}</small>
                 </div>
               </div>
             </div>
@@ -127,11 +157,18 @@
             <small *ngIf="requestForm.invalid" class="d-block"
               >Please check and fill all fields as appropriate</small
             >
-            <small *ngIf="requestForm.invalid && job.sector == null" class="d-block"
+            <small
+              *ngIf="requestForm.invalid && job.sector == null"
+              class="d-block"
               >You have to select a job sector!</small
             >
+            <small
+              *ngIf="requestForm.invalid && job.durType == null"
+              class="d-block"
+              >You have to select a duration type!</small
+            >
           </div>
-          
+
           <div class="header_btn search_btn login_btn jb_cover">
             <!-- <a class="mx-auto col-md-4">Sign Up</a> -->
             <button
