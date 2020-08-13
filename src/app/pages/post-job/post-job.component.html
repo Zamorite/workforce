@@ -38,7 +38,7 @@
               </li>
               <li>
                 <a
-                  [routerLink]="['/', 'auth', 'sign_up', {'role': 'employer'}]"
+                  [routerLink]="['/', 'auth', 'sign_up', { role: 'employer' }]"
                   routerLinkActive="router-link-active"
                   class="cp"
                   ><i class="fas fa-power-off"></i> sign up
@@ -166,16 +166,43 @@
                   <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                     <div class="contect_form3">
                       <label>work duration</label>
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="For how long would workers work?"
-                        formControlName="duration"
-                        [(ngModel)]="job.duration"
-                      />
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-lg-4 d-inline-block">
+                            <input
+                              type="number"
+                              min="1"
+                              formControlName="durNum"
+                              [(ngModel)]="job.durNum"
+                            />
 
-                      <div *ngIf="formErrors.duration" class="text-danger">
-                        <small class="mr-1">{{ formErrors.duration }}</small>
+                            <div *ngIf="formErrors.durNum" class="text-danger">
+                              <small class="mr-1">{{
+                                formErrors.durNum
+                              }}</small>
+                            </div>
+                          </div>
+                          <div class="col-lg-8 d-inline-block">
+                            <select
+                              class="form-control"
+                              formControlName="durType"
+                              [(ngModel)]="job.durType"
+                            >
+                              <option *ngFor="let s of durTypes" [value]="s">{{
+                                s
+                              }}</option>
+                              <option [value]="null" disabled selected
+                                >Select Duration Type</option
+                              >
+                            </select>
+
+                            <div *ngIf="formErrors.durType" class="text-danger">
+                              <small class="mr-1">{{
+                                formErrors.durType
+                              }}</small>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -185,7 +212,6 @@
                       <input
                         type="date"
                         name="name"
-                        placeholder="40/h Week"
                         formControlName="expiryDate"
                         [(ngModel)]="job.expiryDate"
                       />
@@ -239,7 +265,9 @@
                       />
 
                       <div *ngIf="formErrors.ownerAddress" class="text-danger">
-                        <small class="mr-1">{{ formErrors.ownerAddress }}</small>
+                        <small class="mr-1">{{
+                          formErrors.ownerAddress
+                        }}</small>
                       </div>
                     </div>
                   </div>
@@ -252,7 +280,12 @@
                   <small
                     *ngIf="requestForm.invalid && job.sector == null"
                     class="d-block"
-                    >You have to select a job sector!</small
+                    >{{ validationMessages.sector.required }}</small
+                  >
+                  <small
+                    *ngIf="requestForm.invalid && job.durType == null"
+                    class="d-block"
+                    >{{ validationMessages.durType.required }}</small
                   >
                 </div>
 
@@ -262,7 +295,9 @@
                     (click)="request()"
                     class="mx-auto col-md-4"
                     [disabled]="
-                      requestForm.invalid || ['', null].includes(job.sector)
+                      requestForm.invalid ||
+                      ['', null].includes(job.sector) ||
+                      ['', null].includes(job.durType)
                     "
                     type="submit"
                   >

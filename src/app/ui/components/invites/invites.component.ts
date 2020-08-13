@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/core/models/user';
-import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { DataService } from 'src/app/core/services/data.service';
-import { NotifService } from 'src/app/core/services/notif.service';
-import { Job } from 'src/app/core/models/job.model';
+import { Component, OnInit } from "@angular/core";
+import { User } from "src/app/core/models/user";
+import { Observable } from "rxjs";
+import { AuthService } from "src/app/core/services/auth.service";
+import { DataService } from "src/app/core/services/data.service";
+import { NotifService } from "src/app/core/services/notif.service";
+import { Job } from "src/app/core/models/job.model";
 
 @Component({
-  selector: 'app-invites',
-  templateUrl: './invites.component.html',
-  styleUrls: ['./invites.component.scss']
+  selector: "app-invites",
+  templateUrl: "./invites.component.html",
+  styleUrls: ["./invites.component.scss"],
 })
 export class InvitesComponent implements OnInit {
   invites: Observable<any>;
   email: string;
+
+  durTypes = ["day", "week", "month", "year", "decade"];
 
   constructor(
     public auth: AuthService,
@@ -22,7 +24,7 @@ export class InvitesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.auth.user$.subscribe(u => {
+    this.auth.user$.subscribe((u) => {
       if (u) {
         this.email = u.email;
         this.invites = this.data.getMyInvites(u.email);
@@ -38,5 +40,4 @@ export class InvitesComponent implements OnInit {
         this.notif.success("You have successfully accepted the invitation.")
       );
   }
-
 }

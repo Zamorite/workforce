@@ -123,28 +123,30 @@ export class DataService {
 
     const RCol$ = this.afs.collection(`requests`);
 
-    return RCol$.doc(request.id)
-      .set(request)
-      .then(() => {
-        this.afs
-          .doc(`users/${request.owner}`)
-          .update({ requests: firestore.FieldValue.increment(1) })
-          .catch((e) => console.warn("Could not update number of requests."));
+    return (
+      RCol$.doc(request.id)
+        .set(request)
+        .then(() => {
+          this.afs
+            .doc(`users/${request.owner}`)
+            .update({ requests: firestore.FieldValue.increment(1) })
+            .catch((e) => console.warn("Could not update number of requests."));
 
-        this.afs
-          .doc(`users/admin@wrk4s.com`)
-          .update({ newRequests: firestore.FieldValue.increment(1) })
-          .catch((e) =>
-            console.warn("Could not update number of new requests.")
-          );
-      })
-      .catch((err) => {
-        this.notif.remove();
-        this.notif.logError(err);
-      })
-      .finally(() => {
-        return Promise.resolve(true);
-      });
+          this.afs
+            .doc(`users/admin@wrk4s.com`)
+            .update({ newRequests: firestore.FieldValue.increment(1) })
+            .catch((e) =>
+              console.warn("Could not update number of new requests.")
+            );
+        })
+        // .catch((err) => {
+        //   this.notif.remove();
+        //   this.notif.logError(err);
+        // })
+        .finally(() => {
+          return Promise.resolve(true);
+        })
+    );
   }
 
   deleteJob(id: string) {
@@ -241,8 +243,18 @@ export class DataService {
               confirmed: firestore.FieldValue.arrayUnion(user.email),
               invitees: firestore.FieldValue.arrayRemove(user.email),
             })
-            .then((res) =>
+            .then((res) => {
               userDoc$
+                .update({
+                  applications: firestore.FieldValue.increment(1),
+                  // free: ,
+                  appointDate: job.expiryDate,
+                  durNum: job.durNum,
+                  durType: job.durType,
+                })
+                .catch((err) => this.notif.logError(err));
+
+              confirmedCol$
                 .update({
                   applications: firestore.FieldValue.increment(1),
                   // free: ,
@@ -253,8 +265,8 @@ export class DataService {
                 .catch((err) => this.notif.logError(err))
                 .finally(() => {
                   return Promise.resolve(true);
-                })
-            )
+                });
+            })
             .catch((err) => this.notif.logError(err))
             .finally(() => {
               return Promise.resolve(true);

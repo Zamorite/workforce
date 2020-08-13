@@ -4,7 +4,10 @@
       <div class="row">
         <div class="col-12">
           <div class="jp_job_post_side_img">
-            <img src="https://www.gravatar.com/avatar/{{e.email}}?d=retro&s=98" alt="post_img" />
+            <img
+              src="https://www.gravatar.com/avatar/{{ e.email }}?d=retro&s=98"
+              alt="post_img"
+            />
           </div>
           <div class="jp_job_post_right_cont">
             <h4>{{ e.fname }} {{ e.lname }}</h4>
@@ -26,8 +29,8 @@
         <i class="fas fa-book"></i>
       </div>
       <div class="emp_job_side_text">
-        <h1>{{ (e.requests || 0) > 0 ? (e.requests || 0) : 'No' }}</h1>
-        <p>job{{ (e.requests || 0) > 1 ? 's' : '' }} posted</p>
+        <h1>{{ (e.requests || 0) > 0 ? e.requests || 0 : "No" }}</h1>
+        <p>job{{ (e.requests || 0) > 1 ? "s" : "" }} posted</p>
       </div>
     </div>
   </div>
@@ -37,13 +40,12 @@
         <i class="fas fa-envelope-open-text"></i>
       </div>
       <div class="emp_job_side_text">
-        <h1>{{ (e.delivered || 0) > 0 ? (e.delivered || 0) : 'No' }}</h1>
-        <p>applicant{{ (e.delivered || 0) > 1 ? 's' : '' }} delivered</p>
+        <h1>{{ (e.delivered || 0) > 0 ? e.delivered || 0 : "No" }}</h1>
+        <p>applicant{{ (e.delivered || 0) > 1 ? "s" : "" }} delivered</p>
       </div>
     </div>
   </div>
-  
-  
+
   <div class="col-12">
     <div class="job_filter_category_sidebar jb_cover">
       <div class="job_filter_sidebar_heading jb_cover">

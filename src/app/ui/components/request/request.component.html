@@ -17,7 +17,7 @@
           <div class="col-lg-4 col-md-12 col-sm-12 col-12">
             <div class="emp_job_post jb_cover">
               <div class="emp_job_side_img greens">
-                <i class="fas fa-eye"></i>
+                <i class="fas fa-hand-holding"></i>
               </div>
               <div class="emp_job_side_text">
                 <h1>
@@ -151,7 +151,12 @@
                     <div class="jp_listing_list_icon_cont_wrapper">
                       <ul>
                         <li>duration:</li>
-                        <li>{{ r.duration }}</li>
+                        <li *ngIf="r.durNum != null">
+                          {{ r.durNum }} {{ r.durType }}
+                        </li>
+                        <li *ngIf="r.durNum == null">
+                          {{ r.durNum }} {{ r.durType }}
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -332,8 +337,78 @@
                         {{ c.address }}
                       </li> -->
                       <li>
-                        <i class="fa fa-calendar"></i>&nbsp;
-                        {{ c.appointDate }}
+                        <i class="fa fa-calendar"></i>&nbsp; Free on:&nbsp;
+                        <span *ngIf="c.durType.trim() == durTypes[0]">
+                          {{
+                            c.appointDate
+                              | amAdd: c.durNum:"days"
+                              | amDateFormat: "MMM DD, YYYY"
+                          }}
+                        </span>
+                        <span *ngIf="c.durType.trim() == durTypes[1]">
+                          {{
+                            c.appointDate
+                              | amAdd: c.durNum:"weeks"
+                              | amDateFormat: "MMM DD, YYYY"
+                          }}
+                        </span>
+                        <span *ngIf="c.durType.trim() == durTypes[2]">
+                          {{
+                            c.appointDate
+                              | amAdd: c.durNum:"months"
+                              | amDateFormat: "MMM DD, YYYY"
+                          }}
+                        </span>
+                        <span *ngIf="c.durType.trim() == durTypes[3]">
+                          {{
+                            c.appointDate
+                              | amAdd: c.durNum:"years"
+                              | amDateFormat: "MMM DD, YYYY"
+                          }}
+                        </span>
+                        <span *ngIf="c.durType.trim() == durTypes[4]">
+                          {{ c.durNum }} decades from
+                          {{ c.appointDate | amDateFormat: "MMM DD, YYYY" }}
+                        </span>
+                        <!-- {{ print(c.durType.trim() == durTypes[3]) }} -->
+                        <!-- {{ print(durTypes[3]) }} -->
+                        <!-- <span [ngSwitch]="c.appointDate">
+                          <p *ngSwitchCase="durTypes[0]">
+                            {{
+                              c.appointDate
+                                | amAdd: c.durNum:"days"
+                                | amDateFormat: "MMM DD, YYYY"
+                            }}
+                          </p>
+                          <p *ngSwitchCase="durTypes[1]">
+                            {{
+                              c.appointDate
+                                | amAdd: c.durNum:"weeks"
+                                | amDateFormat: "MMM DD, YYYY"
+                            }}
+                          </p>
+                          <p *ngSwitchCase="durTypes[2]">
+                            {{
+                              c.appointDate
+                                | amAdd: c.durNum:"months"
+                                | amDateFormat: "MMM DD, YYYY"
+                            }}
+                          </p>
+                          <p *ngSwitchCase="durTypes[3]">
+                            {{
+                              c.appointDate
+                                | amAdd: c.durNum:"years"
+                                | amDateFormat: "MMM DD, YYYY"
+                            }}
+                          </p>
+                          <p *ngSwitchCase="durTypes[4]">
+                            In {{ c.durNum }} decades time
+                          </p>
+                          <p *ngSwitchDefault>
+                            {{ print(c) }}
+                            Not found
+                          </p>
+                        </span> -->
                       </li>
                     </ul>
                   </div>
@@ -415,6 +490,42 @@
                         <li>
                           <i class="flaticon-location-pointer"></i>&nbsp;
                           {{ m.address }}
+                        </li>
+
+                        <li *ngIf="m.durType != null">
+                          <i class="fa fa-calendar"></i>&nbsp; Free on:&nbsp;
+                          <span *ngIf="m.durType.trim() == durTypes[0]">
+                            {{
+                              m.appointDate
+                                | amAdd: m.durNum:"days"
+                                | amDateFormat: "MMM DD, YYYY"
+                            }}
+                          </span>
+                          <span *ngIf="m.durType.trim() == durTypes[1]">
+                            {{
+                              m.appointDate
+                                | amAdd: m.durNum:"weeks"
+                                | amDateFormat: "MMM DD, YYYY"
+                            }}
+                          </span>
+                          <span *ngIf="m.durType.trim() == durTypes[2]">
+                            {{
+                              m.appointDate
+                                | amAdd: m.durNum:"months"
+                                | amDateFormat: "MMM DD, YYYY"
+                            }}
+                          </span>
+                          <span *ngIf="m.durType.trim() == durTypes[3]">
+                            {{
+                              m.appointDate
+                                | amAdd: m.durNum:"years"
+                                | amDateFormat: "MMM DD, YYYY"
+                            }}
+                          </span>
+                          <span *ngIf="m.durType.trim() == durTypes[4]">
+                            {{ m.durNum }} decades from
+                            {{ m.appointDate | amDateFormat: "MMM DD, YYYY" }}
+                          </span>
                         </li>
                       </ul>
                     </div>

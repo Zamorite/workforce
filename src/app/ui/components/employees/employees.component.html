@@ -35,6 +35,41 @@
                 <i class="flaticon-location-pointer"></i>&nbsp;
                 {{ c.address }}
               </li>
+              <li *ngIf="c.durType != null">
+                <i class="fa fa-calendar"></i>&nbsp; Free on:&nbsp;
+                <span *ngIf="c.durType.trim() == durTypes[0]">
+                  {{
+                    c.appointDate
+                      | amAdd: c.durNum:"days"
+                      | amDateFormat: "MMM DD, YYYY"
+                  }}
+                </span>
+                <span *ngIf="c.durType.trim() == durTypes[1]">
+                  {{
+                    c.appointDate
+                      | amAdd: c.durNum:"weeks"
+                      | amDateFormat: "MMM DD, YYYY"
+                  }}
+                </span>
+                <span *ngIf="c.durType.trim() == durTypes[2]">
+                  {{
+                    c.appointDate
+                      | amAdd: c.durNum:"months"
+                      | amDateFormat: "MMM DD, YYYY"
+                  }}
+                </span>
+                <span *ngIf="c.durType.trim() == durTypes[3]">
+                  {{
+                    c.appointDate
+                      | amAdd: c.durNum:"years"
+                      | amDateFormat: "MMM DD, YYYY"
+                  }}
+                </span>
+                <span *ngIf="c.durType.trim() == durTypes[4]">
+                  {{ c.durNum }} decades from
+                  {{ c.appointDate | amDateFormat: "MMM DD, YYYY" }}
+                </span>
+              </li>
             </ul>
           </div>
         </div>

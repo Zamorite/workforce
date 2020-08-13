@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Job } from 'src/app/core/models/job.model';
-import { UtilService } from 'src/app/core/services/util.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { DataService } from 'src/app/core/services/data.service';
-import { Router } from '@angular/router';
-import { NotifService } from 'src/app/core/services/notif.service';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Job } from "src/app/core/models/job.model";
+import { UtilService } from "src/app/core/services/util.service";
+import { AuthService } from "src/app/core/services/auth.service";
+import { DataService } from "src/app/core/services/data.service";
+import { Router } from "@angular/router";
+import { NotifService } from "src/app/core/services/notif.service";
 
 @Component({
-  selector: 'app-post-job',
-  templateUrl: './post-job.component.html',
-  styleUrls: ['./post-job.component.scss']
+  selector: "app-post-job",
+  templateUrl: "./post-job.component.html",
+  styleUrls: ["./post-job.component.scss"],
 })
 export class PostJobComponent implements OnInit {
   requestForm: FormGroup;
@@ -22,7 +22,9 @@ export class PostJobComponent implements OnInit {
     ownerAddress: null,
     description: null,
     location: null,
-    duration: null,
+    // duration: null,
+    durNum: 1,
+    durType: null,
     expiryDate: null,
     no: 1,
     sector: null,
@@ -45,8 +47,10 @@ export class PostJobComponent implements OnInit {
     "Marketing and Creative",
     "Engineering",
     "Teachers",
-    "Other"
+    "Other",
   ];
+
+  durTypes = ["day", "week", "month", "year", "decade"];
 
   constructor(
     public util: UtilService,
@@ -70,13 +74,17 @@ export class PostJobComponent implements OnInit {
       owner: ["", [Validators.required, Validators.email]],
       description: ["", [Validators.required, Validators.minLength(25)]],
       location: ["", [Validators.required, Validators.minLength(10)]],
-      duration: ["", [Validators.required, Validators.minLength(5)]],
+      // duration: ["", [Validators.required, Validators.minLength(5)]],
       expiryDate: ["", [Validators.required]],
       no: ["", [Validators.required, Validators.min(1)]],
-      sector: ["", [Validators.required]]
+      durNum: ["", [Validators.required, Validators.min(1)]],
+      sector: ["", [Validators.required]],
+      durType: ["", [Validators.required]],
     });
 
-    this.requestForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    this.requestForm.valueChanges.subscribe((data) =>
+      this.onValueChanged(data)
+    );
     this.onValueChanged(); // reset validation messages
   }
 
@@ -107,69 +115,84 @@ export class PostJobComponent implements OnInit {
     owner: "",
     description: "",
     location: "",
-    duration: "",
+    // duration: "",
     expiryDate: "",
     no: "",
-    sector: ""
+    durNum: "",
+    sector: "",
+    durType: "",
   };
 
   validationMessages = {
     title: {
       required: "Job title is required.",
-      minlength: "This must be at least 2 characters long."
+      minlength: "This must be at least 2 characters long.",
     },
     ownerName: {
       required: "Your Fullname is required.",
-      minlength: "This must be at least 2 characters long."
+      minlength: "This must be at least 2 characters long.",
     },
     owner: {
       required: "Your email is required.",
-      email: "Please use a valid email."
+      email: "Please use a valid email.",
     },
     ownerPhone: {
       required: "Your phone number is required.",
-      minlength: "This must be at least 11 characters long."
+      minlength: "This must be at least 11 characters long.",
     },
     ownerAddress: {
       required: "Your address is required.",
-      minlength: "This must be at least 10 characters long."
+      minlength: "This must be at least 10 characters long.",
     },
     description: {
       required: "Job description is required.",
-      minlength: "This must be at least 25 characters long."
+      minlength: "This must be at least 25 characters long.",
     },
     location: {
       required: "Job location is required.",
-      minlength: "This must be at least 10 characters long."
+      minlength: "This must be at least 10 characters long.",
     },
-    duration: {
-      required: "Job duration is required.",
-      minlength: "This must be at least 5 characters long."
-    },
+    // duration: {
+    //   required: "Job duration is required.",
+    //   minlength: "This must be at least 5 characters long.",
+    // },
     expiryDate: {
-      required: "When does this vacancy expire?"
+      required: "When does this vacancy expire?",
       // minlength: "This must be at least 2 characters long."
     },
     no: {
       required: "How many people are needed?",
-      min: "Why are you here, then?"
+      min: "Why are you here, then?",
+    },
+    durNum: {
+      required: "How long would workers spend?",
+      min: "Why are you here, then?",
     },
     sector: {
-      required: "Choose an appropriate sector for your potential employees"
+      required: "Choose an appropriate sector for your potential employees",
       // minlength: "This must be at least 2 characters long."
-    }
+    },
+    durType: {
+      required: "Choose a duration type under work duration",
+      // minlength: "This must be at least 2 characters long."
+    },
   };
 
   request(): void {
-    this.notif.load('Sending your request...')
+    this.notif.load("Sending your request...");
 
-    this.data.addJob(this.job).then(() => {
-      this.requestForm.reset;
-      this.notif.remove();
-      this.notif.success("Request submitted successflly.");
-      this.router.navigate(["/", "dash"]);
-    });
+    this.data
+      .addJob(this.job)
+      .then(() => {
+        this.requestForm.reset;
+        this.notif.remove();
+        this.notif.success("Request submitted successflly.");
+        this.router.navigate(["/"]);
+      })
+      .catch((e) => {
+        this.notif.remove();
+        this.notif.logError(e);
+      });
     console.log(this.job);
   }
-
 }

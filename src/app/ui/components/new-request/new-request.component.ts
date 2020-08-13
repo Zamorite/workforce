@@ -22,7 +22,7 @@ export class NewRequestComponent implements OnInit {
     ownerAddress: null,
     description: null,
     location: null,
-    durNum: null,
+    durNum: 1,
     durType: null,
     expiryDate: null,
     no: 1,
@@ -48,7 +48,7 @@ export class NewRequestComponent implements OnInit {
     "Other",
   ];
 
-  durations = ["day", "week", "month", "year"];
+  durTypes = ["day", "week", "month", "year", "decade"];
 
   constructor(
     public util: UtilService,
@@ -159,12 +159,18 @@ export class NewRequestComponent implements OnInit {
   request(): void {
     this.notif.load("Sending your request...");
 
-    this.data.addJob(this.job).then(() => {
-      this.requestForm.reset;
-      this.notif.remove();
-      this.notif.success("Request submitted successflly.");
-      this.router.navigate(["/", "dash"]);
-    });
+    this.data
+      .addJob(this.job)
+      .then(() => {
+        this.requestForm.reset;
+        this.notif.remove();
+        this.notif.success("Request submitted successflly.");
+        this.router.navigate(["/", "dashboard"]);
+      })
+      .catch((e) => {
+        this.notif.remove();
+        this.notif.logError(e);
+      });
     console.log(this.job);
   }
 }

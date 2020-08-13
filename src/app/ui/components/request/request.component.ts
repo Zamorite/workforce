@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { DataService } from 'src/app/core/services/data.service';
-import { NotifService } from 'src/app/core/services/notif.service';
-import { Job } from 'src/app/core/models/job.model';
-import { User } from 'src/app/core/models/user';
+import { Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { AuthService } from "src/app/core/services/auth.service";
+import { ActivatedRoute } from "@angular/router";
+import { DataService } from "src/app/core/services/data.service";
+import { NotifService } from "src/app/core/services/notif.service";
+import { Job } from "src/app/core/models/job.model";
+import { User } from "src/app/core/models/user";
 
 @Component({
-  selector: 'app-request',
-  templateUrl: './request.component.html',
-  styleUrls: ['./request.component.scss']
+  selector: "app-request",
+  templateUrl: "./request.component.html",
+  styleUrls: ["./request.component.scss"],
 })
 export class RequestComponent implements OnInit {
   request: Observable<any>;
   confirmed: Observable<any>;
+  today: Date;
+
+  durTypes = ["day", "week", "month", "year", "decade"];
 
   matchedEmployees: Observable<User[]>;
 
@@ -26,20 +29,27 @@ export class RequestComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const id = <string>params["id"];
       if (id != null) {
         this.request = this.data.getRequest(id);
 
-        this.request.subscribe(r => {
+        this.request.subscribe((r) => {
           this.matchedEmployees = this.data.getUserBySector(r.sector);
         });
 
         this.auth.user$.subscribe(
-          u => (this.confirmed = this.data.getConfirmed(id))
+          (u) => (this.confirmed = this.data.getConfirmed(id))
         );
       }
+      // Date.now().toString().toLocaleUpperCase
     });
+
+    this.today = new Date();
+  }
+
+  print(c) {
+    console.log(c);
   }
 
   sendInvite(req: Job, user: User) {
@@ -69,7 +79,7 @@ export class RequestComponent implements OnInit {
       .deliverApplicants(reqId, ownerID, no)
       .then(() =>
         this.notif.success(
-          `${no} applicant${no > 1 ? "s have" : ' has'} been delivered.`
+          `${no} applicant${no > 1 ? "s have" : " has"} been delivered.`
         )
       );
   }
@@ -77,5 +87,4 @@ export class RequestComponent implements OnInit {
   cantSubmit() {
     this.notif.logError("Cannot deliver an empty list.");
   }
-
 }

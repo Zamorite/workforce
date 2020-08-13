@@ -1,3 +1,5 @@
+import { firestore } from "firebase/app";
+import Timestamp = firestore.Timestamp;
 export interface Roles {
   employee?: boolean;
   employer?: boolean;
@@ -32,7 +34,7 @@ export interface User {
   invitations?: number;
   applications?: number;
   // last appointment
-  appointDate?: Date;
+  appointDate?: any;
   durNum?: number;
   durType?: string;
 
