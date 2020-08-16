@@ -3,7 +3,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import Notiflix from "notiflix-angular";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class NotifService {
   uid: string;
@@ -12,7 +12,7 @@ export class NotifService {
     Notiflix.Notify.Init({
       timeout: 4500,
       plainText: false,
-      messageMaxLength: 150
+      messageMaxLength: 300,
     });
 
     Notiflix.Loading.Init({ svgColor: "#BF865D", messageColor: "#d8d8d8" });
@@ -25,7 +25,7 @@ export class NotifService {
   success(message: string) {
     Notiflix.Notify.Success(`Great! <br/>${message}`);
   }
-  
+
   warn(message: string) {
     Notiflix.Notify.Warning(`Oops! <br/>${message}`);
   }
@@ -47,7 +47,7 @@ export class NotifService {
   }
 
   load(message?: string) {
-    Notiflix.Loading.Hourglass(message ? message : 'Loading...');
+    Notiflix.Loading.Hourglass(message ? message : "Loading...");
   }
 
   remove() {
