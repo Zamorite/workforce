@@ -175,6 +175,17 @@ export class AuthService {
     } catch (error) {
       this.notif.logError("Could not Update User", error);
       console.group(`⚠ Could not updare User: ${error}`);
+
+      // retry without {merge: true}
+      try {
+        return userRef.set(data).then(() => {
+          this.notif.success("Updated User Successfully !");
+          console.log("✔ Updated User successfully");
+        });
+      } catch (error) {
+        this.notif.logError("Could not Update User", error);
+        console.group(`⚠ Could not updare User: ${error}`);
+      }
     }
     // .then(() => {
     //   this.notif.success("Updated User Successfully !");
