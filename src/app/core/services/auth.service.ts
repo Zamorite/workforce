@@ -68,13 +68,25 @@ export class AuthService {
       .createUserWithEmailAndPassword(user.email, user.password)
       .then((credential) => {
         console.log("success");
-        this.updateUserData(credential.user, user, role).then(() => {
-          this.router.navigate(["/", "dashboard"]);
+        this.updateUserData(credential.user, user, role)
+          .then(() => {
+            this.router.navigate(["/", "dashboard"]);
 
-          // handle greeting directly
-          this.notif.remove();
-          this.notif.success(`Welcome on board, ${user.fname}.`);
-        });
+            // handle greeting directly
+            this.notif.remove();
+            this.notif.success(`Welcome on board, ${user.fname}.`);
+          })
+          .then(() =>
+            this.afs.collection(`emails`).add({
+              to: user.email,
+              message: {
+                subject: "✨ Welcome to WorkForce !",
+                text: `Hello ${user.fname} ${user.lname} 👋🏽\n\nWorkForce welcomes you today with open arms. We can’t wait to start working with you! We hope we can together help you grow bigger and wider.\nOnce again, welcome.\n\n\nThe WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com`,
+                // html:
+                //   "This is the <code>HTML</code> section of the email body.",
+              },
+            })
+          );
         // .then(() => this.notif.success("Updated User Successfully !"))
         // .catch((e) => this.notif.logError("Could not Update User", e));
         // this.notif.success("Welcome on board.");

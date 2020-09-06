@@ -177,7 +177,7 @@ export class DataService {
                 to: inviteeEmail,
                 message: {
                   subject: "New Job Invite! WorkForce",
-                  text: `You have been sent a job invitation to work as ${job.title} somewhere in ${job.location}.\nFor more details, please log into your account on https://wrk4s.com.`,
+                  text: `You have been sent a job invitation to work as ${job.title} somewhere in ${job.location}.\nFor more details, please log into your account on https://wrk4s.com.\n\n\nThe WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com`,
                   // html:
                   //   "This is the <code>HTML</code> section of the email body.",
                 },
@@ -210,7 +210,7 @@ export class DataService {
                 to: inviteeEmail,
                 message: {
                   subject: "Withdrawal of Job Invite! WorkForce",
-                  text: `Sorry, your application to work as ${job.title} somewhere in ${job.location} has just been declined.`,
+                  text: `Sorry, your application to work as ${job.title} somewhere in ${job.location} has just been declined.\n\n\nThe WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com`,
                   // html:
                   //   "This is the <code>HTML</code> section of the email body.",
                 },
@@ -297,7 +297,7 @@ export class DataService {
               to: inviteeEmail,
               message: {
                 subject: "Withdrawal of Job Invite! WorkForce",
-                text: `Sorry, your application to work as ${job.title} somewhere in ${job.location} has just been closed.`,
+                text: `Sorry, your application to work as ${job.title} somewhere in ${job.location} has just been closed.\n\n\nThe WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com`,
                 // html:
                 //   "This is the <code>HTML</code> section of the email body.",
               },
@@ -324,7 +324,7 @@ export class DataService {
               to: email,
               message: {
                 subject: "Your Workers are Ready! WorkForce",
-                text: `The workers you ordered from WorkForce are ready.\nLog onto https://wrk4s.com to view them.`,
+                text: `The workers you requested from WorkForce are ready.\nLog into your account at https://wrk4s.com to view them.\n\n\nThe WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com`,
                 // html:
                 //   "This is the <code>HTML</code> section of the email body.",
               },
