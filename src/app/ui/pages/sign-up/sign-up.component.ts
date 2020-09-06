@@ -10,7 +10,7 @@ import { ActivatedRoute } from "@angular/router";
 @Component({
   selector: "app-sign-up",
   templateUrl: "./sign-up.component.html",
-  styleUrls: ["./sign-up.component.scss"]
+  styleUrls: ["./sign-up.component.scss"],
 })
 export class SignUpComponent implements OnInit {
   role: string = "employee";
@@ -28,19 +28,19 @@ export class SignUpComponent implements OnInit {
     "Office Assistants",
     "Private Drivers",
     "Child Minders",
-    "Cleaner",
+    "Cleaning",
     "Manual Labourers",
     "Private Nurses",
     "Adult Careers",
     "Sales Girl",
-    "Sales Boys/Girls",
+    "Sales Boys",
     "Student Pick-up and Drop-off",
     "Manufacturing",
     "Senior Appointment",
     "Marketing and Creative",
     "Engineering",
     "Teachers",
-    "Other"
+    "Other",
   ];
 
   general = {
@@ -50,7 +50,7 @@ export class SignUpComponent implements OnInit {
     password: null,
 
     phone: null,
-    address: null
+    address: null,
   };
 
   employee = {
@@ -69,12 +69,12 @@ export class SignUpComponent implements OnInit {
     referee2Email: null,
     referee2Job: null,
     referee2Rel: null,
-    referee2Address: null
+    referee2Address: null,
   };
 
   employer = {
     jobTitle: null,
-    company: null
+    company: null,
   };
 
   constructor(
@@ -87,7 +87,7 @@ export class SignUpComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (params["role"]) {
         this.role = <string>params["role"];
       }
@@ -109,15 +109,15 @@ export class SignUpComponent implements OnInit {
         [
           Validators.required,
           //Validators.pattern("^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$"),
-          Validators.minLength(8)
-        ]
+          Validators.minLength(8),
+        ],
       ],
-      cPassword: ["", [Validators.required]]
+      cPassword: ["", [Validators.required]],
     });
 
     this.rForm = this.fb.group({
       jobTitle: ["", [Validators.required, Validators.minLength(2)]],
-      company: ["", [Validators.required, Validators.minLength(2)]]
+      company: ["", [Validators.required, Validators.minLength(2)]],
     });
 
     this.eForm = this.fb.group({
@@ -136,16 +136,16 @@ export class SignUpComponent implements OnInit {
       referee2Email: ["", [Validators.required, Validators.email]],
       referee2Job: ["", [Validators.required, Validators.minLength(2)]],
       referee2Rel: ["", [Validators.required, Validators.minLength(2)]],
-      referee2Address: ["", [Validators.required, Validators.minLength(10)]]
+      referee2Address: ["", [Validators.required, Validators.minLength(10)]],
     });
 
-    this.gForm.valueChanges.subscribe(data =>
+    this.gForm.valueChanges.subscribe((data) =>
       this.onValueChanged(this.gForm, data)
     );
-    this.rForm.valueChanges.subscribe(data =>
+    this.rForm.valueChanges.subscribe((data) =>
       this.onValueChanged(this.rForm, data)
     );
-    this.eForm.valueChanges.subscribe(data =>
+    this.eForm.valueChanges.subscribe((data) =>
       this.onValueChanged(this.eForm, data)
     );
 
@@ -199,108 +199,110 @@ export class SignUpComponent implements OnInit {
     referee2Address: "",
 
     password: "",
-    cPassword: ""
+    cPassword: "",
   };
 
   validationMessages = {
     fname: {
       required: "First name is required.",
-      minlength: "First name must be at least 2 characters long."
+      minlength: "First name must be at least 2 characters long.",
     },
     lname: {
       required: "Last name is required.",
-      minlength: "Last name must be at least 2 characters long."
+      minlength: "Last name must be at least 2 characters long.",
     },
     email: {
       required: "Email is required.",
-      email: "Email must be a valid email"
+      email: "Email must be a valid email",
     },
     password: {
       required: "Password is required.",
       pattern: "Password must include at least one letter and one number.",
       minlength: "Password must be at least 8 characters long.",
-      maxlength: "Password cannot be more than 40 characters long."
+      maxlength: "Password cannot be more than 40 characters long.",
     },
     cPassword: {
-      required: "Retype password."
+      required: "Retype password.",
     },
     phone: {
       required: "Phone is required.",
-      minlength: "Phone must be at least 11 characters long."
+      minlength: "Phone must be at least 11 characters long.",
     },
     address: {
       required: "Address is required.",
-      minlength: "Address must be at least 10 characters long."
+      minlength: "Address must be at least 10 characters long.",
     },
 
     profession: {
       required: "Profession is required.",
-      minlength: "Profession must be at least 2 characters long."
+      minlength: "Profession must be at least 2 characters long.",
     },
 
     sector: {
-      required: "Choose an appropriate sector for your profession"
+      required: "Choose an appropriate sector for your profession",
     },
 
     jobTitle: {
       required: "Your job title is required.",
-      minlength: "Job titles must be at least 2 characters long."
+      minlength: "Job titles must be at least 2 characters long.",
     },
 
     company: {
       required: "Your Company Name is required.",
-      minlength: "Company name must be at least 2 characters long."
+      minlength: "Company name must be at least 2 characters long.",
     },
 
     referee1Name: {
       required: "Referee's Name is required.",
-      minlength: "Referee's Name must be at least 2 characters long."
+      minlength: "Referee's Name must be at least 2 characters long.",
     },
     referee1Phone: {
       required: "Referee's phone number is required.",
-      minlength: "Referee's phone number must be at least 11 characters long."
+      minlength: "Referee's phone number must be at least 11 characters long.",
     },
     referee1Email: {
       required: "Referee's email is required.",
-      email: "Referee's email must a valid email."
+      email: "Referee's email must a valid email.",
     },
     referee1Job: {
       required: "Referee's occupation is required.",
-      minlength: "Referee's occupation must be at least 2 characters long."
+      minlength: "Referee's occupation must be at least 2 characters long.",
     },
     referee1Rel: {
       required: "Who is the referee to you?",
-      minlength: "Relationship with referee must be at least 2 characters long."
+      minlength:
+        "Relationship with referee must be at least 2 characters long.",
     },
     referee1Address: {
       required: "Referee's address is required.",
-      minlength: "Referee's address must be at least 2 characters long."
+      minlength: "Referee's address must be at least 2 characters long.",
     },
 
     referee2Name: {
       required: "Referee's Name is required.",
-      minlength: "Referee's Name must be at least 2 characters long."
+      minlength: "Referee's Name must be at least 2 characters long.",
     },
     referee2Phone: {
       required: "Referee's phone number is required.",
-      minlength: "Referee's phone number must be at least 11 characters long."
+      minlength: "Referee's phone number must be at least 11 characters long.",
     },
     referee2Email: {
       required: "Referee's email is required.",
-      email: "Referee's email must a valid email."
+      email: "Referee's email must a valid email.",
     },
     referee2Job: {
       required: "Referee's occupation is required.",
-      minlength: "Referee's occupation must be at least 2 characters long."
+      minlength: "Referee's occupation must be at least 2 characters long.",
     },
     referee2Rel: {
       required: "Who is the referee to you?",
-      minlength: "Relationship with referee must be at least 2 characters long."
+      minlength:
+        "Relationship with referee must be at least 2 characters long.",
     },
     referee2Address: {
       required: "Referee's address is required.",
-      minlength: "Referee's address must be at least 2 characters long."
-    }
+      minlength: "Referee's address must be at least 2 characters long.",
+    },
   };
 
   signUp(): void {
@@ -313,7 +315,7 @@ export class SignUpComponent implements OnInit {
     const user: User = {
       ...this.general,
       ...this.employer,
-      ...this.employee
+      ...this.employee,
     };
 
     console.group("User", user);
@@ -329,12 +331,12 @@ export class SignUpComponent implements OnInit {
 
     if (this.proof) {
       this.us
-        .upload(this.proof, "proofs", pUrl => {
+        .upload(this.proof, "proofs", (pUrl) => {
           user.proofURL = pUrl;
 
           this.auth.emailSignUp(user, this.role);
         })
-        .catch(e => {
+        .catch((e) => {
           this.notif.logError(e);
           this.notif.remove();
         });

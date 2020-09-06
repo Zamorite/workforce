@@ -68,18 +68,23 @@ export class AuthService {
       .createUserWithEmailAndPassword(user.email, user.password)
       .then((credential) => {
         console.log("success");
-        this.updateUserData(credential.user, user, role);
-        // this.notif.success("Welcome on board.");
-        this.router.navigate(["/", "dashboard"]);
+        this.updateUserData(credential.user, user, role).then(() => {
+          this.router.navigate(["/", "dashboard"]);
 
-        // handle greeting directly
-        this.notif.remove();
-        this.notif.success(`Welcome on board, ${user.fname}.`);
+          // handle greeting directly
+          this.notif.remove();
+          this.notif.success(`Welcome on board, ${user.fname}.`);
+        });
+        // .then(() => this.notif.success("Updated User Successfully !"))
+        // .catch((e) => this.notif.logError("Could not Update User", e));
+        // this.notif.success("Welcome on board.");
       })
       .catch((error) => {
         console.log(error);
         this.notif.remove();
         this.notif.logError(error);
+        // TODO: Consider the code below 👌🏽
+        // this.notif.logError(this.errorMap[error.code]);
       });
   }
 
@@ -125,13 +130,19 @@ export class AuthService {
       `users/${fireUser.email}`
     );
 
+    console.log(`🔥 fireUser`);
+    console.log(fireUser);
+
+    console.log(`🙋🏽‍♂️ user`);
+    console.log(user);
+
     const data: User = {
       ...user,
       uid: fireUser.uid,
       createdAt: new Date(),
       appointDate: new Date(),
       durNum: 0,
-      durType: "day",
+      // durType: "day",
       email: fireUser.email,
       roles: {
         admin: role == "admin",
@@ -139,7 +150,44 @@ export class AuthService {
         employer: role == "employer",
       },
     };
-    return userRef.set(data, { merge: true });
+
+    console.log("⌛ Attempting to update user");
+
+    // return userRef
+    //   .get()
+    //   .toPromise()
+    //   .then((doc) => {
+    //     if (!doc.exists) {
+    //       userRef.set(data, { merge: true });
+    //     } else {
+    //       userRef.update(data);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(`[LOGIN] ${err}`);
+    //   });
+
+    try {
+      return userRef.set(data, { merge: true }).then(() => {
+        this.notif.success("Updated User Successfully !");
+        console.log("✔ Updated User successfully");
+      });
+    } catch (error) {
+      this.notif.logError("Could not Update User", error);
+      console.group(`⚠ Could not updare User: ${error}`);
+    }
+    // .then(() => {
+    //   this.notif.success("Updated User Successfully !");
+    //   console.log("✔ Updated User successfully");
+    // })
+    // .catch((e) => {
+    //   this.notif.logError("Could not Update User", e);
+    //   console.group(`⚠ Could not updare User: ${e}`);
+    // })
+    // .finally(() => {
+    //   this.notif.logError("What exactly happened there ?");
+    //   console.log("😕 What exactly happened there ?");
+    // });
   }
 
   // ***Role-based Authorization
