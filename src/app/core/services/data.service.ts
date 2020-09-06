@@ -324,7 +324,7 @@ export class DataService {
               to: email,
               message: {
                 subject: "Your Workers are Ready! WorkForce",
-                text: `The workers you ordered from WorkForce are ready.\nLog onto https://wrk4s.com to view them.`,
+                text: `The workers you requested from WorkForce are ready.\nLog into your account at https://wrk4s.com to view them.`,
                 // html:
                 //   "This is the <code>HTML</code> section of the email body.",
               },
