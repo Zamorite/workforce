@@ -111,6 +111,22 @@
             </ul>
           </div>
         </div>
+        <div
+          *ngIf="e?.proofURL != null"
+          class="jp_listing_overview_list_main_wrapper jb_cover"
+        >
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-file"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>utility proof:</li>
+              <li>
+                <a href="{{ e?.proofURL }}" download>Download Utility Proof</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

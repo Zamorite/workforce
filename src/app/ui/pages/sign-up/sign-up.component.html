@@ -161,6 +161,69 @@
                           <small class="mr-1">{{ formErrors.address }}</small>
                         </div>
                       </div>
+
+                      <div class="d-block col-12">
+                        <label for="utility_bill">Upload Utility Bill</label>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <!-- <label for="utility_bill">Upload Utility Bill</label> -->
+                        <input
+                          type="file"
+                          #proofInput
+                          class="form-control require"
+                          name="utility_bill"
+                          placeholder="Utility Bill*"
+                          (blur)="setProof($event)"
+                        />
+
+                        <!--
+                          *** Don't uncomment!!
+                          (change)="setProof($event)" -->
+
+                        <div
+                          *ngIf="!['', null].includes(proofError)"
+                          class="text-danger"
+                        >
+                          <small class="mr-1">{{ proofError }}</small>
+                        </div>
+                      </div>
+
+                      <div
+                        class="form-group icon_form comments_form d-inline-block col-md-6"
+                      >
+                        <!-- <label for="utility_bill">Selected Files</label> -->
+                        <input
+                          type="text"
+                          class="form-control require"
+                          value="{{
+                            proof
+                              ? 'Selected ' + proof.name
+                              : 'No bill selected yet !'
+                          }}"
+                          disabled
+                        />
+
+                        <i
+                          *ngIf="proof?.type.startsWith('image')"
+                          class="fas fa-image"
+                        ></i>
+                        <!-- <i *ngIf="proof.type == 'application/pdf'" class="fas fa-file-pdf"></i> -->
+                        <ng-container
+                          *ngIf="proof?.type.startsWith('application')"
+                        >
+                          <ng-container
+                            *ngIf="proof?.type.endsWith('pdf'); else ms"
+                          >
+                            <i class="fas fa-file-pdf"></i>
+                          </ng-container>
+                          <ng-template #ms>
+                            <i class="fas fa-file"></i>
+                          </ng-template>
+                        </ng-container>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -176,9 +239,9 @@
                     class="form-control"
                     id="roleSelect"
                   >
-                    <option [value]="'employee'" selected
-                      >I am an Employee</option
-                    >
+                    <option [value]="'employee'" selected>
+                      I am an Employee
+                    </option>
                     <option [value]="'employer'">I am an Employer</option>
                   </select>
                 </div>
@@ -282,12 +345,12 @@
                           class="form-control"
                           formControlName="sector"
                         >
-                          <option *ngFor="let s of sectors" [value]="s">{{
-                            s
-                          }}</option>
-                          <option [value]="null" disabled selected
-                            >Select Sector</option
-                          >
+                          <option *ngFor="let s of sectors" [value]="s">
+                            {{ s }}
+                          </option>
+                          <option [value]="null" disabled selected>
+                            Select Sector
+                          </option>
                         </select>
 
                         <i class="fas fa-globe"></i>
@@ -296,65 +359,8 @@
                           <small class="mr-1">{{ formErrors.sector }}</small>
                         </div>
                       </div>
-                      
-                      <div class="d-block col-12"><label for="utility_bill">Upload Utility Bill</label></div>
 
-                      <div
-                        class="form-group icon_form comments_form d-inline-block col-md-6"
-                      >
-                        <!-- <label for="utility_bill">Upload Utility Bill</label> -->
-                        <input
-                          type="file"
-                          #proofInput
-                          class="form-control require"
-                          name="utility_bill"
-                          placeholder="Utility Bill*"
-                          (blur)="setProof($event)"
-                        />
-
-                        <!--
-                          *** Don't uncomment!!
-                          (change)="setProof($event)" -->
-
-                        <div
-                          *ngIf="!['', null].includes(proofError)"
-                          class="text-danger"
-                        >
-                          <small class="mr-1">{{ proofError }}</small>
-                        </div>
-
-
-                        
-                        
-
-
-                      </div>
-
-                      <div
-                        class="form-group icon_form comments_form d-inline-block col-md-6"
-                      >
-                      <!-- <label for="utility_bill">Selected Files</label> -->
-                        <input
-                          type="text"
-                          class="form-control require"
-                          value="{{ proof ? 'Selected ' + proof.name : 'No bill selected yet !' }}"
-                          disabled
-                        />
-
-                        
-                        <i *ngIf="proof?.type.startsWith('image')" class="fas fa-image"></i>
-                        <!-- <i *ngIf="proof.type == 'application/pdf'" class="fas fa-file-pdf"></i> -->
-                        <ng-container *ngIf="proof?.type.startsWith('application')">
-                          <ng-container *ngIf="proof?.type.endsWith('pdf'); else ms">
-                            <i class="fas fa-file-pdf"></i>
-                          </ng-container>
-                          <ng-template #ms>
-                            <i class="fas fa-file"></i>
-                          </ng-template>            
-                        </ng-container>
-                        
-                        
-                      </div>
+                      <!-- Upload Utility Bill Removed from here -->
                     </div>
                   </div>
                 </div>
@@ -656,11 +662,18 @@
             <!-- form-group icon_form  -->
 
             <div class="text-danger">
-              <small *ngIf="gForm.invalid || (role == 'employer' && rForm.invalid) || (role == 'employee' && eForm.invalid)" class="mr-1"
+              <small
+                *ngIf="
+                  gForm.invalid ||
+                  (role == 'employer' && rForm.invalid) ||
+                  (role == 'employee' && eForm.invalid)
+                "
+                class="mr-1"
                 >Please check and fill all fields as appropriate</small
               >
-              <small *ngIf="role == 'employee' && proof == null" class="mr-1"
-                >You have to select an utility bill e.g PHCN bill, Water Bill, etc.</small
+              <small *ngIf="proof == null" class="mr-1"
+                >You have to select an utility bill e.g PHCN bill, Water Bill,
+                etc.</small
               >
             </div>
 
@@ -671,7 +684,8 @@
                 class="mx-auto col-md-4"
                 [disabled]="
                   gForm.invalid ||
-                  (role == 'employee' && (eForm.invalid || proof == null)) ||
+                  proof == null ||
+                  (role == 'employee' && eForm.invalid) ||
                   (role == 'employer' && rForm.invalid)
                 "
                 type="submit"
