@@ -54,10 +54,26 @@
                     class="btn_hover slider_btn"
                   >
                     <a
+                      *ngIf="!(auth.user$ | async)"
                       [routerLink]="['/', 'post_job']"
                       class="gc_main_navigation"
                       >Post a Job</a
                     >
+                    <span *ngIf="auth.user$ | async as user">
+                      <a
+                        *ngIf="auth.isEmployer(user); else notEmployer"
+                        [routerLink]="['/', 'dashboard', 'new_request']"
+                        class="gc_main_navigation"
+                        >Post a Job</a
+                      >
+                      <ng-template #notEmployer>
+                        <a
+                          [routerLink]="['/', 'dashboard']"
+                          class="gc_main_navigation"
+                          >Visit Dashboard</a
+                        >
+                      </ng-template>
+                    </span>
                   </div>
                   <div
                     data-animation="animated fadeInUp"

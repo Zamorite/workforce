@@ -68,13 +68,25 @@ export class AuthService {
       .createUserWithEmailAndPassword(user.email, user.password)
       .then((credential) => {
         console.log("success");
-        this.updateUserData(credential.user, user, role).then(() => {
-          this.router.navigate(["/", "dashboard"]);
+        this.updateUserData(credential.user, user, role)
+          .then(() => {
+            this.router.navigate(["/", "dashboard"]);
 
-          // handle greeting directly
-          this.notif.remove();
-          this.notif.success(`Welcome on board, ${user.fname}.`);
-        });
+            // handle greeting directly
+            this.notif.remove();
+            this.notif.success(`Welcome on board, ${user.fname}.`);
+          })
+          .then(() =>
+            this.afs.collection(`emails`).add({
+              to: user.email,
+              message: {
+                subject: "✨ Welcome to WorkForce !",
+                text: `Hello ${user.fname} ${user.lname} 👋🏽\n\nWorkForce welcomes you today with open arms. We can’t wait to start working with you! We hope we can together help you grow bigger and wider.\nOnce again, welcome.\n\n\nThe WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com`,
+                // html:
+                //   "This is the <code>HTML</code> section of the email body.",
+              },
+            })
+          );
         // .then(() => this.notif.success("Updated User Successfully !"))
         // .catch((e) => this.notif.logError("Could not Update User", e));
         // this.notif.success("Welcome on board.");
@@ -120,8 +132,7 @@ export class AuthService {
   }
 
   signOut() {
-    this.afAuth.auth.signOut();
-    this.router.navigate(["/"]);
+    this.afAuth.auth.signOut().then(() => this.router.navigate(["/"]));
   }
 
   private updateUserData(fireUser, user: User, role: String) {
@@ -130,11 +141,11 @@ export class AuthService {
       `users/${fireUser.email}`
     );
 
-    console.log(`🔥 fireUser`);
-    console.log(fireUser);
+    // console.log(`🔥 fireUser`);
+    // console.log(fireUser);
 
-    console.log(`🙋🏽‍♂️ user`);
-    console.log(user);
+    // console.log(`🙋🏽‍♂️ user`);
+    // console.log(user);
 
     const data: User = {
       ...user,
@@ -153,40 +164,42 @@ export class AuthService {
 
     console.log("⌛ Attempting to update user");
 
-    // return userRef
-    //   .get()
-    //   .toPromise()
-    //   .then((doc) => {
-    //     if (!doc.exists) {
-    //       userRef.set(data, { merge: true });
-    //     } else {
-    //       userRef.update(data);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(`[LOGIN] ${err}`);
-    //   });
-
-    try {
-      return userRef.set(data, { merge: true }).then(() => {
-        this.notif.success("Updated User Successfully !");
-        console.log("✔ Updated User successfully");
+    return userRef
+      .get()
+      .toPromise()
+      .then((doc) => {
+        if (!doc.exists) {
+          userRef.set(data, { merge: true });
+        } else {
+          userRef.update(data);
+        }
+      })
+      .catch((err) => {
+        console.log(`[LOGIN] ${err}`);
       });
-    } catch (error) {
-      this.notif.logError("Could not Update User", error);
-      console.group(`⚠ Could not updare User: ${error}`);
+    // =========================================================================================
+    // try {
+    //   return userRef.set(data, { merge: true }).then(() => {
+    //     this.notif.success("Updated User Successfully !");
+    //     console.log("✔ Updated User successfully");
+    //   });
+    // } catch (error) {
+    //   this.notif.logError("Could not Update User", error);
+    //   console.group(`⚠ Could not updare User: ${error}`);
 
-      // retry without {merge: true}
-      try {
-        return userRef.set(data).then(() => {
-          this.notif.success("Updated User Successfully !");
-          console.log("✔ Updated User successfully");
-        });
-      } catch (error) {
-        this.notif.logError("Could not Update User", error);
-        console.group(`⚠ Could not updare User: ${error}`);
-      }
-    }
+    //   // retry without {merge: true}
+    //   try {
+    //     return userRef.set(data).then(() => {
+    //       this.notif.success("Updated User Successfully !");
+    //       console.log("✔ Updated User successfully");
+    //     });
+    //   } catch (error) {
+    //     this.notif.logError("Could not Update User", error);
+    //     console.group(`⚠ Could not updare User: ${error}`);
+    //   }
+    // }
+
+    // =============================================================================
     // .then(() => {
     //   this.notif.success("Updated User Successfully !");
     //   console.log("✔ Updated User successfully");
