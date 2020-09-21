@@ -132,8 +132,7 @@ export class AuthService {
   }
 
   signOut() {
-    this.afAuth.auth.signOut();
-    this.router.navigate(["/"]);
+    this.afAuth.auth.signOut().then(() => this.router.navigate(["/"]));
   }
 
   private updateUserData(fireUser, user: User, role: String) {
@@ -142,11 +141,11 @@ export class AuthService {
       `users/${fireUser.email}`
     );
 
-    console.log(`🔥 fireUser`);
-    console.log(fireUser);
+    // console.log(`🔥 fireUser`);
+    // console.log(fireUser);
 
-    console.log(`🙋🏽‍♂️ user`);
-    console.log(user);
+    // console.log(`🙋🏽‍♂️ user`);
+    // console.log(user);
 
     const data: User = {
       ...user,
@@ -165,40 +164,42 @@ export class AuthService {
 
     console.log("⌛ Attempting to update user");
 
-    // return userRef
-    //   .get()
-    //   .toPromise()
-    //   .then((doc) => {
-    //     if (!doc.exists) {
-    //       userRef.set(data, { merge: true });
-    //     } else {
-    //       userRef.update(data);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(`[LOGIN] ${err}`);
-    //   });
-
-    try {
-      return userRef.set(data, { merge: true }).then(() => {
-        this.notif.success("Updated User Successfully !");
-        console.log("✔ Updated User successfully");
+    return userRef
+      .get()
+      .toPromise()
+      .then((doc) => {
+        if (!doc.exists) {
+          userRef.set(data, { merge: true });
+        } else {
+          userRef.update(data);
+        }
+      })
+      .catch((err) => {
+        console.log(`[LOGIN] ${err}`);
       });
-    } catch (error) {
-      this.notif.logError("Could not Update User", error);
-      console.group(`⚠ Could not updare User: ${error}`);
+    // =========================================================================================
+    // try {
+    //   return userRef.set(data, { merge: true }).then(() => {
+    //     this.notif.success("Updated User Successfully !");
+    //     console.log("✔ Updated User successfully");
+    //   });
+    // } catch (error) {
+    //   this.notif.logError("Could not Update User", error);
+    //   console.group(`⚠ Could not updare User: ${error}`);
 
-      // retry without {merge: true}
-      try {
-        return userRef.set(data).then(() => {
-          this.notif.success("Updated User Successfully !");
-          console.log("✔ Updated User successfully");
-        });
-      } catch (error) {
-        this.notif.logError("Could not Update User", error);
-        console.group(`⚠ Could not updare User: ${error}`);
-      }
-    }
+    //   // retry without {merge: true}
+    //   try {
+    //     return userRef.set(data).then(() => {
+    //       this.notif.success("Updated User Successfully !");
+    //       console.log("✔ Updated User successfully");
+    //     });
+    //   } catch (error) {
+    //     this.notif.logError("Could not Update User", error);
+    //     console.group(`⚠ Could not updare User: ${error}`);
+    //   }
+    // }
+
+    // =============================================================================
     // .then(() => {
     //   this.notif.success("Updated User Successfully !");
     //   console.log("✔ Updated User successfully");
