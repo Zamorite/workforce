@@ -41,6 +41,7 @@ export interface User {
   profession?: string;
   sector?: string;
   proofURL?: string;
+  proof2URL?: string;
 
   referee1Name?: string;
   referee1Phone?: string;
