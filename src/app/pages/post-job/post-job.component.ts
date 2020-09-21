@@ -181,18 +181,7 @@ export class PostJobComponent implements OnInit {
   request(): void {
     this.notif.load("Sending your request...");
 
-    this.data
-      .addJob(this.job)
-      .then(() => {
-        this.requestForm.reset;
-        this.notif.remove();
-        this.notif.success("Request submitted successflly.");
-        this.router.navigate(["/"]);
-      })
-      .catch((e) => {
-        this.notif.remove();
-        this.notif.logError(e);
-      });
+    this.data.addJobAnonymously(this.job);
     console.log(this.job);
   }
 }
