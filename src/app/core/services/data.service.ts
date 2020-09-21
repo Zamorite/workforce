@@ -11,6 +11,7 @@ import { NotifService } from "./notif.service";
 // import { UploadService } from "./upload.service";
 import { Job } from "../models/job.model";
 import { User } from "../models/user";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -19,6 +20,7 @@ export class DataService {
   constructor(
     private afs: AngularFirestore,
     // private auth: AuthService,
+    private router: Router,
     private notif: NotifService // private file: UploadService // private moment: M
   ) {}
 
@@ -130,13 +132,15 @@ export class DataService {
           this.afs
             .doc(`users/${request.owner}`)
             .update({ requests: firestore.FieldValue.increment(1) })
-            .catch((e) => console.warn("Could not update number of requests."));
+            // .catch((e) => console.warn("Could not update number of requests"));
+            .catch((e) => console.warn(e));
 
           this.afs
             .doc(`users/admin@wrk4s.com`)
             .update({ newRequests: firestore.FieldValue.increment(1) })
-            .catch((e) =>
-              console.warn("Could not update number of new requests.")
+            .catch(
+              (e) => console.warn(e)
+              // console.warn("Could not update number of new requests.")
             );
         })
         // .catch((err) => {
@@ -147,6 +151,70 @@ export class DataService {
           return Promise.resolve(true);
         })
     );
+  }
+
+  addJobAnonymously(request: Job) {
+    this.afs
+      .doc(`users/${request.owner}`)
+      .snapshotChanges()
+      .subscribe((x) => {
+        console.log(x.payload.exists);
+        if (x.payload.exists) {
+          this.notif.remove();
+
+          this.notif.logError(
+            "The entered email seems to be attached to an active account. Please log in or replace the email to continue."
+          );
+        } else {
+          request.id = request.id ? request.id : this.afs.createId();
+          request.createdAt = new Date();
+
+          const RCol$ = this.afs.collection(`requests`);
+
+          return (
+            RCol$.doc(request.id)
+              .set(request)
+              .then(() => {
+                this.afs
+                  .doc(`users/${request.owner}`)
+                  .update({ requests: firestore.FieldValue.increment(1) })
+                  // .catch((e) => console.warn("Could not update number of requests"));
+                  .catch((e) => console.warn(e));
+
+                this.afs
+                  .doc(`users/admin@wrk4s.com`)
+                  .update({ newRequests: firestore.FieldValue.increment(1) })
+                  .catch(
+                    (e) => console.warn(e)
+                    // console.warn("Could not update number of new requests.")
+                  );
+              })
+              .then(() => {
+                this.notif.remove();
+                this.notif.success("Request submitted successflly.");
+                this.router.navigate(["/"]);
+              })
+              // .catch((e) => {
+              //   this.notif.remove();
+              //   this.notif.logError(e);
+              // })
+              .finally(() => {
+                return Promise.resolve(true);
+              })
+          );
+        }
+      });
+
+    // usersRef.get()
+    //   .then((docSnapshot) => {
+    //     if (docSnapshot.exists) {
+    //       usersRef.onSnapshot((doc) => {
+    //         // do stuff with the data
+    //       });
+    //     } else {
+    //       usersRef.set({...}) // create the document
+    //     }
+    // });
   }
 
   deleteJob(id: string) {
