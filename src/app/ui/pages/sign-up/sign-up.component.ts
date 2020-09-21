@@ -17,8 +17,12 @@ export class SignUpComponent implements OnInit {
   cPassword: string;
 
   @ViewChild("proofInput", { static: false }) proofInput;
+  @ViewChild("proof2Input", { static: false }) proof2Input;
+
   proof: File;
   proofError: string;
+  proof2: File;
+  proof2Error: string;
 
   gForm: FormGroup;
   eForm: FormGroup;
@@ -334,7 +338,16 @@ export class SignUpComponent implements OnInit {
         .upload(this.proof, "proofs", (pUrl) => {
           user.proofURL = pUrl;
 
-          this.auth.emailSignUp(user, this.role);
+          this.us
+            .upload(this.proof2, "proofs", (p2Url) => {
+              user.proof2URL = p2Url;
+
+              this.auth.emailSignUp(user, this.role);
+            })
+            .catch((e) => {
+              this.notif.logError(e);
+              this.notif.remove();
+            });
         })
         .catch((e) => {
           this.notif.logError(e);
@@ -346,10 +359,11 @@ export class SignUpComponent implements OnInit {
     // });
   }
 
-  setProof(event) {
+  setProof() {
     var files = this.proofInput.nativeElement.files;
 
     console.log(`Length: ${files.length}`);
+    console.log(files);
 
     if (files.length >= 1) {
       this.proof = files[0];
@@ -357,6 +371,22 @@ export class SignUpComponent implements OnInit {
     } else {
       this.proof = null;
       this.proofError =
+        "You have to select an utility bill e.g PHCN Bill, Water Bill, etc.";
+    }
+  }
+
+  setProof2() {
+    var files = this.proof2Input.nativeElement.files;
+
+    console.log(`Length: ${files.length}`);
+    console.log(files);
+
+    if (files.length >= 1) {
+      this.proof2 = files[0];
+      this.proof2Error = null;
+    } else {
+      this.proof2 = null;
+      this.proof2Error =
         "You have to select an utility bill e.g PHCN Bill, Water Bill, etc.";
     }
   }

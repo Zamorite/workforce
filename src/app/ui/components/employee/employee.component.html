@@ -121,9 +121,29 @@
           </div>
           <div class="jp_listing_list_icon_cont_wrapper">
             <ul>
-              <li>utility proof:</li>
+              <li>Utility proof 1:</li>
               <li>
-                <a href="{{ e?.proofURL }}" download>Download Utility Proof</a>
+                <a href="{{ e?.proofURL }}" download target="_blank"
+                  >Download First Utility Proof</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          *ngIf="e?.proof2URL != null"
+          class="jp_listing_overview_list_main_wrapper jb_cover"
+        >
+          <div class="jp_listing_list_icon">
+            <i class="fas fa-file"></i>
+          </div>
+          <div class="jp_listing_list_icon_cont_wrapper">
+            <ul>
+              <li>Utility proof 2:</li>
+              <li>
+                <a href="{{ e?.proof2URL }}" download target="_blank"
+                  >Download Second Utility Proof</a
+                >
               </li>
             </ul>
           </div>

@@ -163,20 +163,32 @@
                       </div>
 
                       <div class="d-block col-12">
-                        <label for="utility_bill">Upload Utility Bill</label>
+                        <label>Upload Two Utility Bills</label>
                       </div>
 
                       <div
                         class="form-group icon_form comments_form d-inline-block col-md-6"
                       >
-                        <!-- <label for="utility_bill">Upload Utility Bill</label> -->
+                        <label
+                          for="utility_bill"
+                          class="form-control require"
+                          >{{
+                            proof
+                              ? "Bill 1: " +
+                                (proof.name.length > 15
+                                  ? (proof.name | slice: 0:6) + "..."
+                                  : proof.name)
+                              : "Upload First Utility Bill"
+                          }}</label
+                        >
                         <input
                           type="file"
                           #proofInput
-                          class="form-control require"
+                          class="d-none"
+                          id="utility_bill"
                           name="utility_bill"
                           placeholder="Utility Bill*"
-                          (blur)="setProof($event)"
+                          (change)="setProof()"
                         />
 
                         <!--
@@ -191,38 +203,43 @@
                         </div>
                       </div>
 
+                      <!-- Removed Thumb Code from here ============================================= -->
+
                       <div
                         class="form-group icon_form comments_form d-inline-block col-md-6"
                       >
-                        <!-- <label for="utility_bill">Selected Files</label> -->
-                        <input
-                          type="text"
+                        <label
+                          for="utility_bill_2"
                           class="form-control require"
-                          value="{{
-                            proof
-                              ? 'Selected ' + proof.name
-                              : 'No bill selected yet !'
-                          }}"
-                          disabled
+                          >{{
+                            proof2
+                              ? "Bill 2: " +
+                                (proof2.name.length > 15
+                                  ? (proof2.name | slice: 0:6) + "..."
+                                  : proof2.name)
+                              : "Upload Second Utility Bill"
+                          }}</label
+                        >
+                        <input
+                          type="file"
+                          #proof2Input
+                          class="d-none"
+                          id="utility_bill_2"
+                          name="utility_bill_2"
+                          placeholder="Utility Bill 2*"
+                          (change)="setProof2()"
                         />
 
-                        <i
-                          *ngIf="proof?.type.startsWith('image')"
-                          class="fas fa-image"
-                        ></i>
-                        <!-- <i *ngIf="proof.type == 'application/pdf'" class="fas fa-file-pdf"></i> -->
-                        <ng-container
-                          *ngIf="proof?.type.startsWith('application')"
+                        <!--
+                          *** Don't uncomment!!
+                          (change)="setProof($event)" -->
+
+                        <div
+                          *ngIf="!['', null].includes(proof2Error)"
+                          class="text-danger"
                         >
-                          <ng-container
-                            *ngIf="proof?.type.endsWith('pdf'); else ms"
-                          >
-                            <i class="fas fa-file-pdf"></i>
-                          </ng-container>
-                          <ng-template #ms>
-                            <i class="fas fa-file"></i>
-                          </ng-template>
-                        </ng-container>
+                          <small class="mr-1">{{ proof2Error }}</small>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -671,8 +688,8 @@
                 class="mr-1"
                 >Please check and fill all fields as appropriate</small
               >
-              <small *ngIf="proof == null" class="mr-1"
-                >You have to select an utility bill e.g PHCN bill, Water Bill,
+              <small *ngIf="proof == null || proof2 == null" class="mr-1"
+                >You have to select TWO utility bills e.g PHCN bill, Water Bill,
                 etc.</small
               >
             </div>
