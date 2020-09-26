@@ -163,7 +163,7 @@
                       </div>
 
                       <div class="d-block col-12">
-                        <label>Upload Two Utility Bills</label>
+                        <label>Upload one form of ID and an Utility Bill</label>
                       </div>
 
                       <div
@@ -174,11 +174,11 @@
                           class="form-control require"
                           >{{
                             proof
-                              ? "Bill 1: " +
+                              ? "ID: " +
                                 (proof.name.length > 15
                                   ? (proof.name | slice: 0:6) + "..."
                                   : proof.name)
-                              : "Upload First Utility Bill"
+                              : "Upload ID"
                           }}</label
                         >
                         <input
@@ -213,11 +213,11 @@
                           class="form-control require"
                           >{{
                             proof2
-                              ? "Bill 2: " +
+                              ? "Utility Bill: " +
                                 (proof2.name.length > 15
                                   ? (proof2.name | slice: 0:6) + "..."
                                   : proof2.name)
-                              : "Upload Second Utility Bill"
+                              : "Upload Utility Bill"
                           }}</label
                         >
                         <input
