@@ -2,6 +2,10 @@
   background: gray !important;
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
+
 .search_btn button:disabled::before {
   border: 1px solid gray !important;
 }
@@ -11,5 +15,12 @@
 }
 
 .cp {
-  cursor: pointer!important;
+  cursor: pointer !important;
+}
+
+a.cp.link {
+  color: gray !important;
+  &:hover {
+    color: #bf865d !important;
+  }
 }
