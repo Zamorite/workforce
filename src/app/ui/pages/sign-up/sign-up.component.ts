@@ -13,6 +13,9 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./sign-up.component.scss"],
 })
 export class SignUpComponent implements OnInit {
+  otherSector: boolean = false;
+  specifySectorMessage: string = "Please enter your sector name.";
+
   role: string = "employee";
   cPassword: string;
 
@@ -126,7 +129,7 @@ export class SignUpComponent implements OnInit {
 
     this.eForm = this.fb.group({
       profession: ["", [Validators.required, Validators.minLength(2)]],
-      sector: ["", [Validators.required]],
+      sector: ["", [Validators.required, Validators.minLength(2)]],
 
       referee1Name: ["", [Validators.required, Validators.minLength(2)]],
       referee1Phone: ["", [Validators.required, Validators.minLength(11)]],
@@ -244,6 +247,7 @@ export class SignUpComponent implements OnInit {
 
     sector: {
       required: "Choose an appropriate sector for your profession",
+      minlength: "Sector must be at least 2 characters long.",
     },
 
     jobTitle: {
@@ -389,5 +393,23 @@ export class SignUpComponent implements OnInit {
       this.proof2Error =
         "You have to select an utility bill e.g PHCN Bill, Water Bill, etc.";
     }
+  }
+
+  verifySector() {
+    if (["Other", ""].includes(this.employee.sector)) {
+      this.otherSector = true;
+      this.employee.sector = "";
+      this.formErrors.sector = "Specify sector name";
+    } else {
+      this.sectors.push(this.employee.sector);
+      this.employee.sector = this.employee.sector;
+
+      this.otherSector = false;
+    }
+  }
+
+  resetSector() {
+    this.employee.sector = null;
+    this.otherSector = false;
   }
 }

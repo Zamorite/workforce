@@ -356,24 +356,53 @@
                       >
                         <!-- 
                           formControlName="sector" -->
-                        <select
-                          title="Select Sector"
-                          [(ngModel)]="employee.sector"
-                          class="form-control"
-                          formControlName="sector"
-                        >
-                          <option *ngFor="let s of sectors" [value]="s">
-                            {{ s }}
-                          </option>
-                          <option [value]="null" disabled selected>
-                            Select Sector
-                          </option>
-                        </select>
 
+                        <ng-container *ngIf="!otherSector; else otherInput">
+                          <select
+                            title="Select Sector"
+                            [(ngModel)]="employee.sector"
+                            class="form-control"
+                            formControlName="sector"
+                            (change)="verifySector()"
+                          >
+                            <option *ngFor="let s of sectors" [value]="s">
+                              {{ s }}
+                            </option>
+                            <option [value]="null" disabled selected>
+                              Select Sector
+                            </option>
+                          </select>
+                        </ng-container>
+
+                        <ng-template #otherInput>
+                          <input
+                            type="text"
+                            title="Please, specify sector"
+                            class="form-control require"
+                            name="sector"
+                            placeholder="Enter Sector Name"
+                            formControlName="sector"
+                            [(ngModel)]="employee.sector"
+                            (blur)="verifySector()"
+                          />
+                          <i class="fas fa-globe"></i>
+                        </ng-template>
+                        <!-- Please specify the sector then. -->
                         <i class="fas fa-globe"></i>
 
                         <div *ngIf="formErrors.sector" class="text-danger">
-                          <small class="mr-1">{{ formErrors.sector }}</small>
+                          <small class="mr-1">{{ formErrors.sector }} </small>
+                        </div>
+                        <div *ngIf="otherSector">
+                          <small>
+                            <a
+                              title="Show the sector list again"
+                              class="cp link"
+                              (click)="resetSector()"
+                            >
+                              Choose sector from list
+                            </a>
+                          </small>
                         </div>
                       </div>
 
@@ -683,7 +712,8 @@
                 *ngIf="
                   gForm.invalid ||
                   (role == 'employer' && rForm.invalid) ||
-                  (role == 'employee' && eForm.invalid)
+                  (role == 'employee' &&
+                    (eForm.invalid || employee.sector == ''))
                 "
                 class="mr-1"
                 >Please check and fill all fields as appropriate</small
@@ -702,7 +732,8 @@
                 [disabled]="
                   gForm.invalid ||
                   proof == null ||
-                  (role == 'employee' && eForm.invalid) ||
+                  (role == 'employee' &&
+                    (eForm.invalid || employee.sector == '')) ||
                   (role == 'employer' && rForm.invalid)
                 "
                 type="submit"
