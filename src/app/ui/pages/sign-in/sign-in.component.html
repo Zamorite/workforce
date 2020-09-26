@@ -4,8 +4,7 @@
     <div class="row">
       <div class="col-md-6 mx-auto col-sm-12">
         <div class="login_top_box jb_cover">
-          <div 
-          [formGroup]="userForm" class="login_form_wrapper p-3 p-md-5">
+          <div [formGroup]="userForm" class="login_form_wrapper p-3 p-md-5">
             <img src="../../assets/images/logo.png" class="mb-5" alt="logo" />
             <h2>Sign In</h2>
             <div class="form-group icon_form comments_form mx-auto">
@@ -43,7 +42,11 @@
                 <input type="checkbox" />
                 <span class="control__indicator"></span>
               </label> -->
-              <a title="An email with reset link would be sent to the email address specified above." class="cp" (click)="forgotPwd()" class="forget_password">
+              <a
+                title="An email with reset link would be sent to the email address specified above."
+                class="cp link"
+                (click)="forgotPwd()"
+              >
                 Forgot Password
               </a>
               <!-- Todo: Implement the Forgot Password Feature! -->
