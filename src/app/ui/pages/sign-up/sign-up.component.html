@@ -718,10 +718,22 @@
                 class="mr-1"
                 >Please check and fill all fields as appropriate</small
               >
+              <br />
               <small *ngIf="proof == null || proof2 == null" class="mr-1"
-                >You have to select TWO utility bills e.g PHCN bill, Water Bill,
-                etc.</small
+                >You have to select and upload</small
               >
+              <small *ngIf="proof == null" class="mr-1"
+                >one form of ID (Passport, Driver licence or National ID)</small
+              >
+              <small *ngIf="proof == null && proof2 == null" class="mr-1">
+                and
+              </small>
+              <small *ngIf="proof2 == null" class="mr-1"
+                >any utility bill (e.g PHCN bill, Water Bill, etc)</small
+              >
+              <small *ngIf="proof == null || proof2 == null" class="mr-1">
+                .
+              </small>
             </div>
 
             <div class="header_btn search_btn login_btn jb_cover">
