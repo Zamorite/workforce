@@ -115,6 +115,30 @@ export class DataService {
     });
   }
 
+  sendWelcomeMail(user: User, employee: boolean) {
+    var salutation = `Hello ${user.fname} ${user.lname} 👋🏽`;
+
+    var employeeBody =
+      "WorkForce welcomes you today with open arms. We can’t wait to start working with you! We hope we can together help you grow bigger and wider.\nOnce again, welcome";
+
+    var employerBody =
+      "Thank you for registering with WorkForce. Our objective is to provide you a satisfactory service through our professionalism.\nWe hope we can work together in helping you find your desired role within your choosing field";
+
+    var body = employee ? employeeBody : employerBody;
+
+    var closing = "The WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com";
+
+    this.afs.collection(`emails`).add({
+      to: user.email,
+      message: {
+        subject: "✨ Welcome to WorkForce !",
+        text: `${salutation}\n\n${body}.\n\n\n${closing}`,
+        // html:
+        //   "This is the <code>HTML</code> section of the email body.",
+      },
+    });
+  }
+
   /*
     CRUD for Posts and Answers....
   */

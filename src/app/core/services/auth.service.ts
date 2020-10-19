@@ -12,6 +12,7 @@ import { switchMap } from "rxjs/operators";
 import { User } from "../models/user";
 import { Credentials } from "../models/credentials";
 import { NotifService } from "src/app/core/services/notif.service";
+import { DataService } from "./data.service";
 
 @Injectable()
 export class AuthService {
@@ -41,6 +42,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
+    private dataService: DataService,
     private notif: NotifService
   ) {
     // *Get auth data, then get firestore user document || null
@@ -63,18 +65,6 @@ export class AuthService {
   // **Email/Password
 
   emailSignUp(user: User, role = "employee") {
-    var salutation = `Hello ${user.fname} ${user.lname} 👋🏽`;
-
-    var employeeBody =
-      "WorkForce welcomes you today with open arms. We can’t wait to start working with you! We hope we can together help you grow bigger and wider.\nOnce again, welcome";
-
-    var employerBody =
-      "Thank you for registering with WorkForce. Our objective is to provide you a satisfactory service through our professionalism.\nWe hope we can work together in helping you find your desired role within your choosing field";
-
-    var body = role == "employee" ? employeeBody : employerBody;
-
-    var closing = "The WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com";
-
     // return this.af.auth.createUser(user)
     return this.afAuth.auth
       .createUserWithEmailAndPassword(user.email, user.password)
@@ -89,15 +79,7 @@ export class AuthService {
             this.notif.success(`Welcome on board, ${user.fname}.`);
           })
           .then(() =>
-            this.afs.collection(`emails`).add({
-              to: user.email,
-              message: {
-                subject: "✨ Welcome to WorkForce !",
-                text: `${salutation}\n\n${body}.\n\n\n${closing}`,
-                // html:
-                //   "This is the <code>HTML</code> section of the email body.",
-              },
-            })
+            this.dataService.sendWelcomeMail(user, role == "employee")
           );
         // .then(() => this.notif.success("Updated User Successfully !"))
         // .catch((e) => this.notif.logError("Could not Update User", e));
