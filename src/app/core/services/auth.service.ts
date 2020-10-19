@@ -63,6 +63,18 @@ export class AuthService {
   // **Email/Password
 
   emailSignUp(user: User, role = "employee") {
+    var salutation = `Hello ${user.fname} ${user.lname} 👋🏽`;
+
+    var employeeBody =
+      "WorkForce welcomes you today with open arms. We can’t wait to start working with you! We hope we can together help you grow bigger and wider.\nOnce again, welcome";
+
+    var employerBody =
+      "Thank you for registering with WorkForce. Our objective is to provide you a satisfactory service through our professionalism.\nWe hope we can work together in helping you find your desired role within your choosing field";
+
+    var body = role == "employee" ? employeeBody : employerBody;
+
+    var closing = "The WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com";
+
     // return this.af.auth.createUser(user)
     return this.afAuth.auth
       .createUserWithEmailAndPassword(user.email, user.password)
@@ -81,7 +93,7 @@ export class AuthService {
               to: user.email,
               message: {
                 subject: "✨ Welcome to WorkForce !",
-                text: `Hello ${user.fname} ${user.lname} 👋🏽\n\nWorkForce welcomes you today with open arms. We can’t wait to start working with you! We hope we can together help you grow bigger and wider.\nOnce again, welcome.\n\n\nThe WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com`,
+                text: `${salutation}\n\n${body}.\n\n\n${closing}`,
                 // html:
                 //   "This is the <code>HTML</code> section of the email body.",
               },
