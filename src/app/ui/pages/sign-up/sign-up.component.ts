@@ -375,7 +375,7 @@ export class SignUpComponent implements OnInit {
     } else {
       this.proof = null;
       this.proofError =
-        "You have to select a form of ID (Passport, Driver licence or National ID)";
+        "You have to select an utility bill e.g PHCN Bill, Water Bill, etc.";
     }
   }
 
