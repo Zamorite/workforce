@@ -128,15 +128,23 @@ export class DataService {
 
     var closing = "The WorkForce Team\ninfo@wrk4s.com\n\nhttps://wrk4s.com";
 
-    this.afs.collection(`emails`).add({
-      to: user.email,
-      message: {
-        subject: "✨ Welcome to WorkForce !",
-        text: `${salutation}\n\n${body}.\n\n\n${closing}`,
-        // html:
-        //   "This is the <code>HTML</code> section of the email body.",
-      },
-    });
+    this.afs
+      .collection(`emails`)
+      .add({
+        to: user.email,
+        message: {
+          subject: "✨ Welcome to WorkForce !",
+          text: `${salutation}\n\n${body}.\n\n\n${closing}`,
+          // html:
+          //   "This is the <code>HTML</code> section of the email body.",
+        },
+      })
+      .then(() => console.log(`${salutation}\n\n${body}.\n\n\n${closing}`))
+      .catch((e) =>
+        console.warn(
+          `⚠ Error: ${e}\n\n...could not send email due to error above`
+        )
+      );
   }
 
   /*
@@ -199,6 +207,20 @@ export class DataService {
             RCol$.doc(request.id)
               .set(request)
               .then(() => {
+                var names = request.ownerName.split(" ");
+
+                var user = {
+                  fname: names[0],
+                  lname: names.length > 1 ? names[1] : null,
+                  email: request.owner,
+                  password: null,
+
+                  phone: request.ownerPhone,
+                  address: request.ownerAddress,
+                };
+
+                this.sendWelcomeMail(user, false);
+
                 this.afs
                   .doc(`users/${request.owner}`)
                   .update({ requests: firestore.FieldValue.increment(1) })
