@@ -139,7 +139,7 @@ export class DataService {
           //   "This is the <code>HTML</code> section of the email body.",
         },
       })
-      .then(() => console.log(`${salutation}\n\n${body}.\n\n\n${closing}`))
+      .then(() => console.log("📬 Mail sent"))
       .catch((e) =>
         console.warn(
           `⚠ Error: ${e}\n\n...could not send email due to error above`
