@@ -3,11 +3,22 @@
     <div class="latest_job_overlow jb_cover">
       <div class="manage_jobs_wrapper jb_cover">
         <div class="job_list mange_list applications_recent">
-          <h6>All Employers</h6>
+          <h6>
+            All Employers
+            <span class="cp float-right" (click)="toggleSearch()">
+              <i
+                class="fa"
+                [ngClass]="{ 'fa-search': !showSearch, 'fa-close': showSearch }"
+              ></i>
+            </span>
+          </h6>
         </div>
       </div>
 
-      <div class="form-group icon_form comments_form mx-auto mb-3">
+      <div
+        class="form-group comments_form mx-auto mb-3"
+        [ngClass]="{ 'd-none': !showSearch }"
+      >
         <input
           type="text"
           class="form-control require"
