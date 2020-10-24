@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/core/services/data.service';
+import { Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { DataService } from "src/app/core/services/data.service";
 
 @Component({
-  selector: 'app-employers',
-  templateUrl: './employers.component.html',
-  styleUrls: ['./employers.component.scss']
+  selector: "app-employers",
+  templateUrl: "./employers.component.html",
+  styleUrls: ["./employers.component.scss"],
 })
 export class EmployersComponent implements OnInit {
-  employers: Observable<any[]>
+  employers: Observable<any[]>;
+  searchType = "name";
 
-  constructor(private data: DataService) { }
+  constructor(private data: DataService) {}
 
   ngOnInit() {
     this.employers = this.data.getEmployers();
   }
-
 }

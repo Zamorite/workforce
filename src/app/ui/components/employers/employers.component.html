@@ -3,9 +3,56 @@
     <div class="latest_job_overlow jb_cover">
       <div class="manage_jobs_wrapper jb_cover">
         <div class="job_list mange_list applications_recent">
-          <h6>
-            All Employers
-          </h6>
+          <h6>All Employers</h6>
+        </div>
+      </div>
+
+      <div class="form-group icon_form comments_form mx-auto mb-3">
+        <input
+          type="text"
+          class="form-control require"
+          name="full_name"
+          placeholder="Search"
+        />
+        <div class="header_btn search_btn jb_cover mb-3">
+          <!-- <a href="" class="mb-3"> Filter </a> -->
+          <span class="mt-3">
+            <span class="mr-3">Search by: </span>
+            <div class="form-check-inline">
+              <label class="form-check-label search-label cp">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  [(ngModel)]="searchType"
+                  value="name"
+                  name="searchType"
+                />Name
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="form-check-label search-label cp">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  [(ngModel)]="searchType"
+                  value="job"
+                  name="searchType"
+                />Job
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="form-check-label search-label cp">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  [(ngModel)]="searchType"
+                  value="email"
+                  name="searchType"
+                />Sector
+              </label>
+            </div>
+          </span>
+          <a href="" class="float-right mb-3"> Search </a>
         </div>
       </div>
 

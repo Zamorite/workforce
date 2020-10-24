@@ -1,4 +1,4 @@
-.search_btn button:disabled {
+.srch_btn button:disabled {
   background: gray !important;
 }
 
@@ -6,11 +6,11 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.search_btn button:disabled::before {
+.srch_btn button:disabled::before {
   border: 1px solid gray !important;
 }
 
-.search_btn button:disabled:hover {
+.srch_btn button:disabled:hover {
   color: white !important;
 }
 
@@ -34,4 +34,73 @@ a.cp.link {
   word-wrap: break-word; /* Internet Explorer 5.5+ */
   word-break: break-all;
   white-space: normal;
+}
+
+.srch_btn a,
+.srch_btn button {
+  // width:180px;
+  height: 50px;
+  background: #bf865d;
+  /* float:left; */
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-size: 16px;
+  color: #fff;
+  border: 1px solid transparent;
+  line-height: 48px;
+  text-transform: capitalize;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.6s, color 0.6s;
+  -webkit-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  transition: all 0.6s;
+}
+.srch_btn a::before,
+.srch_btn button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #bf865d;
+  border-radius: inherit;
+  opacity: 0;
+  -webkit-transform: scale3d(0.6, 0.6, 1);
+  transform: scale3d(0.6, 0.6, 1);
+  -webkit-transition: -webkit-transform 0.6s, opacity 0.6s;
+  transition: transform 0.6s, opacity 0.6s;
+  -webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+  transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+}
+.srch_btn a:hover,
+.srch_btn button:hover {
+  background-color: transparent;
+  color: #bf865d;
+  -webkit-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  transition: all 0.6s;
+}
+.srch_btn a:hover::before,
+.srch_btn button:hover::before {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  opacity: 1;
+  -webkit-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  transition: all 0.6s;
+}
+
+.search-label::before {
+  background-color: #bf865d !important;
 }
